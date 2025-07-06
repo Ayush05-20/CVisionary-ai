@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login/Signup - CVisionary</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login-signup.css') }}">
+
+    <script type="module" src="frontend/login.js" defer></script>
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="auth-container">
+        <div class="auth-image">
+          <div class="decorative-circles circle-1"></div>
+          <div class="decorative-circ les circle-2"></div>
+
+          <div class="auth-image-content">
+            <h2>Find Your Perfect Match with AI-Powered Recruitment</h2>
+            <p>
+              Join thousands of companies and job seekers who are using our
+              platform to make better matches and build successful teams.
+            </p>
+
+            
+          </div>
+        </div>
+
+        <div class="auth-form">
+          <div class="tabs">
+            <div class="tab active" id="login-tab">Log In</div>
+            <div class="tab" id="signup-tab">Sign Up</div>
+          </div>
+
+          <!-- Alerts container -->
+          <div id="alert-container"></div>
+
+          <!-- Login Form -->
+          <div id="login-form">
+            <h2 class="form-title">Welcome Back</h2>
+            <p class="form-subtitle">
+              Enter your credentials to access your account
+            </p>
+
+            <form id="login-form-element" action = "#" method="POST">
+              <div class="form-group">
+                <label class="form-label" for="login-email"
+                  >Email Address</label
+                >
+                <div class="form-input-icon">
+                  <input
+                    type="email"
+                    id="login-email"
+                    name= "email"
+                    class="form-input" 
+                    placeholder="mail@gmail.com"
+                    required
+                  />
+                  <i class="fas fa-envelope"></i>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="login-password">Password</label>
+                <div class="form-input-icon">
+                  <input
+                    type="password"
+                    id="login-password"
+                    name="password"
+                    class="form-input"
+                    placeholder="••••••••"
+                    required
+                  />
+                  <i class="fas fa-lock"></i>
+                </div>
+              </div>
+
+              <!-- <div class="form-footer">
+                <div class="checkbox-container">
+                  <input
+                    type="checkbox"
+                    id="remember-me"
+                    class="form-checkbox"
+                  />
+                  <label for="remember-me">Remember me</label>
+                </div>
+                <a href="#" class="form-link">Forgot password?</a>
+              </div> -->
+
+              <button type="submit" class="btn btn-primary">Log In</button>
+            </form>
+
+            <!-- <div class="social-login">
+            <div class="social-login-title">
+              <span class="social-login-text">Or continue with</span>
+            </div>
+            
+            <div class="social-buttons">
+              <button class="social-button">
+                <i class="fab fa-google google-icon"></i>
+              </button>
+              <button class="social-button">
+                <i class="fab fa-facebook-f facebook-icon"></i>
+              </button>
+              <button class="social-button">
+                <i class="fab fa-linkedin-in linkedin-icon"></i>
+              </button>
+            </div>
+          </div> -->
+
+            <p class="signup-note">
+              Don't have an account?
+              <a href="#" class="form-link" id="show-signup">Sign up</a>
+            </p>
+          </div>
+
+          <!-- Signup Form -->
+          <div id="signup-form">
+            <h2 class="form-title">Create Account</h2>
+            <p class="form-subtitle">
+              Join our platform to find your perfect match
+            </p>
+
+            <form id="signup-form-element">
+              <div class="form-group">
+                <label class="form-label" for="signup-name">Full Name</label>
+                <div class="form-input-icon">
+                  <input
+                    type="text"
+                    id="signup-name"
+                    class="form-input"
+                    placeholder="Yug Adhikari"
+                    required
+                  />
+                  <i class="fas fa-user"></i>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="signup-email"
+                  >Email Address</label
+                >
+                <div class="form-input-icon">
+                  <input
+                    type="email"
+                    id="signup-email"
+                    class="form-input"
+                    placeholder="mail@gmail.com"
+                    required
+                  />
+                  <i class="fas fa-envelope"></i>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="signup-password">Password</label>
+                <div class="form-input-icon">
+                  <input
+                    type="password"
+                    id="signup-password"
+                    class="form-input"
+                    placeholder="••••••••"
+                  />
+                  <i class="fas fa-lock"></i>
+                </div>
+              </div>
+
+              <div class="form-footer">
+                <div class="checkbox-container">
+                  <input
+                    type="checkbox"
+                    id="agree-terms"
+                    class="form-checkbox"
+                  />
+                  <label for="agree-terms"
+                    >I agree to the <a href="#" class="form-link">Terms</a> and
+                    <a href="#" class="form-link">Privacy Policy</a></label
+                  >
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary">
+                Create Account
+              </button>
+            </form>
+
+            <!-- <div class="social-login">
+            <div class="social-login-title">
+              <span class="social-login-text">Or sign up with</span>
+            </div>
+            
+            <div class="social-buttons">
+              <button class="social-button">
+                <i class="fab fa-google google-icon"></i>
+              </button>
+              <button class="social-button">
+                <i class="fab fa-facebook-f facebook-icon"></i>
+              </button>
+              <button class="social-button">
+                <i class="fab fa-linkedin-in linkedin-icon"></i>
+              </button>
+            </div>
+          </div> -->
+
+            <p class="signup-note">
+              Already have an account?
+              <a href="#" class="form-link" id="show-login">Log in</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Function to show alerts
+      function showAlert(message, type) {
+        const alertContainer = document.getElementById("alert-container");
+
+        // Create alert element
+        const alertDiv = document.createElement("div");
+        alertDiv.className = `alert alert-${type}`;
+
+        // Add appropriate icon
+        const iconClass =
+          type === "success" ? "fa-check-circle" : "fa-exclamation-circle";
+        alertDiv.innerHTML = `<i class="fas ${iconClass}"></i> ${message}`;
+
+        // Clear any existing alerts
+        alertContainer.innerHTML = "";
+
+        // Add the new alert
+        alertContainer.appendChild(alertDiv);
+
+        // Auto-remove after 5 seconds
+        setTimeout(() => {
+          alertDiv.style.opacity = "0";
+          alertDiv.style.transition = "opacity 0.5s";
+          setTimeout(() => {
+            alertContainer.removeChild(alertDiv);
+          }, 500);
+        }, 5000);
+      }
+    </script>
+    <script type="module">
+      // Enhanced Firebase Authentication with Firestore Integration
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics.js";
+      import {
+        getAuth,
+        createUserWithEmailAndPassword,
+        signInWithEmailAndPassword,
+        sendPasswordResetEmail,
+        onAuthStateChanged,
+        signOut,
+        updateProfile,
+      } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+      import {
+        getFirestore,
+        doc,
+        setDoc,
+        getDoc,
+        updateDoc,
+        serverTimestamp,
+        collection,
+        query,
+        where,
+        getDocs,
+      } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+      // Firebase configuration - Replace with your actual config
+      const firebaseConfig = {
+        apiKey: "AIzaSyCyw-l5jQMZS77ZUcgLEY3GnbJmZyFZ_mY",
+        authDomain: "authenticate1-ec031.firebaseapp.com",
+        projectId: "authenticate1-ec031",
+        storageBucket: "authenticate1-ec031.firebasestorage.app",
+        messagingSenderId: "259315058735",
+        appId: "1:259315058735:web:cc77ae09101c38f26e1eda",
+        measurementId: "G-2GVD4YQWEP",
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const auth = getAuth();
+      const db = getFirestore();
+
+      // Enhanced user registration function
+      async function registerUser(name, email, password) {
+        try {
+          // Create user account
+          const userCredential = await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+          const user = userCredential.user;
+
+          // Update user profile in Firebase Auth
+          await updateProfile(user, {
+            displayName: name,
+          });
+
+          // Create user document in Firestore
+          const userData = {
+            name: name,
+            email: email,
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp(),
+            lastLogin: serverTimestamp(),
+            role: "user",
+            isActive: true,
+            
+          };
+
+          await setDoc(doc(db, "users", user.uid), userData);
+
+          console.log("User registered successfully:", user.uid);
+          return {
+            success: true,
+            user: user,
+            userData: userData,
+          };
+        } catch (error) {
+          console.error("Registration error:", error);
+          return {
+            success: false,
+            error: error,
+            message: getErrorMessage(error.code),
+          };
+        }
+      }
+
+      // Enhanced user login function
+      async function loginUser(email, password) {
+        try {
+          const userCredential = await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+          const user = userCredential.user;
+
+          // Get user data from Firestore
+          const userDoc = await getDoc(doc(db, "users", user.uid));
+
+          if (userDoc.exists()) {
+            const userData = userDoc.data();
+
+            // Update last login and increment login count
+            await updateDoc(doc(db, "users", user.uid), {
+              lastLogin: serverTimestamp(),
+              updatedAt: serverTimestamp(),
+              "stats.loginCount": (userData.stats?.loginCount || 0) + 1,
+            });
+
+            // Store user data in localStorage
+            const userInfo = {
+              uid: user.uid,
+              name: userData.name,
+              email: userData.email,
+              profileComplete: userData.profileComplete || false,
+              role: userData.role || "user",
+            };
+
+            localStorage.setItem("LoggedInUserID", user.uid);
+            localStorage.setItem("LoggedInUserName", userData.name);
+            localStorage.setItem("LoggedInUserEmail", userData.email);
+            localStorage.setItem("LoggedInUserRole", userData.role || "user");
+            localStorage.setItem(
+              "ProfileCompletionStatus",
+              userData.profileComplete || false
+            );
+
+            console.log("User logged in successfully:", user.uid);
+            return {
+              success: true,
+              user: user,
+              userData: { ...userData, ...userInfo },
+            };
+          } else {
+            // User exists in Auth but not in Firestore - create basic profile
+            const basicUserData = {
+              name: user.displayName || email.split("@")[0],
+              email: user.email,
+              createdAt: serverTimestamp(),
+              updatedAt: serverTimestamp(),
+              lastLogin: serverTimestamp(),
+              profileComplete: false,
+              role: "user",
+              isActive: true,
+            };
+
+            await setDoc(doc(db, "users", user.uid), basicUserData);
+
+            return {
+              success: true,
+              user: user,
+              userData: basicUserData,
+            };
+          }
+        } catch (error) {
+          console.error("Login error:", error);
+          return {
+            success: false,
+            error: error,
+            message: getErrorMessage(error.code),
+          };
+        }
+      }
+
+      // Get user profile data
+      async function getUserProfile(userId) {
+        try {
+          const userDoc = await getDoc(doc(db, "users", userId));
+
+          if (userDoc.exists()) {
+            return {
+              success: true,
+              data: userDoc.data(),
+              id: userDoc.id,
+            };
+          } else {
+            return {
+              success: false,
+              error: "User profile not found",
+            };
+          }
+        } catch (error) {
+          console.error("Error getting user profile:", error);
+          return {
+            success: false,
+            error: error.message,
+          };
+        }
+      }
+
+      // Update user profile
+      async function updateUserProfile(userId, profileData) {
+        try {
+          const updateData = {
+            ...profileData,
+            updatedAt: serverTimestamp(),
+          };
+
+          // If updating core profile data, mark profile as complete
+          if (profileData.profileData) {
+            updateData.profileComplete = true;
+          }
+
+          await updateDoc(doc(db, "users", userId), updateData);
+
+          console.log("Profile updated successfully");
+          return { success: true };
+        } catch (error) {
+          console.error("Error updating profile:", error);
+          return {
+            success: false,
+            error: error.message,
+          };
+        }
+      }
+
+      // Password reset function
+      async function resetPassword(email) {
+        try {
+          await sendPasswordResetEmail(auth, email);
+          console.log("Password reset email sent");
+          return { success: true };
+        } catch (error) {
+          console.error("Password reset error:", error);
+          return {
+            success: false,
+            error: error,
+            message: getErrorMessage(error.code),
+          };
+        }
+      }
+
+      // Check if email exists
+      async function checkEmailExists(email) {
+        try {
+          const usersRef = collection(db, "users");
+          const q = query(usersRef, where("email", "==", email));
+          const querySnapshot = await getDocs(q);
+
+          return !querySnapshot.empty;
+        } catch (error) {
+          console.error("Error checking email:", error);
+          return false;
+        }
+      }
+
+      // Enhanced password validation
+      function validatePassword(password) {
+        if (!password) {
+          return {
+            valid: false,
+            message: "Password is required",
+          };
+        }
+
+        const minLength = 8;
+        const hasUpperCase = /[A-Z]/.test(password);
+        const hasLowerCase = /[a-z]/.test(password);
+        const hasNumbers = /\d/.test(password);
+        const hasSpecialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(
+          password
+        );
+
+        if (password.length < minLength) {
+          return {
+            valid: false,
+            message: "Password must be at least 8 characters long",
+          };
+        }
+
+        if (!hasUpperCase) {
+          return {
+            valid: false,
+            message: "Password must contain at least one uppercase letter",
+          };
+        }
+
+        if (!hasLowerCase) {
+          return {
+            valid: false,
+            message: "Password must contain at least one lowercase letter",
+          };
+        }
+
+        if (!hasNumbers) {
+          return {
+            valid: false,
+            message: "Password must contain at least one number",
+          };
+        }
+
+        if (!hasSpecialChar) {
+          return {
+            valid: false,
+            message: "Password must contain at least one special character",
+          };
+        }
+
+        return {
+          valid: true,
+          message: "Password is strong",
+        };
+      }
+
+      // Email validation
+      function validateEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+      }
+
+      // Error message handler
+      function getErrorMessage(errorCode) {
+        const errorMessages = {
+          "auth/user-not-found": "No account found with this email address.",
+          "auth/wrong-password": "Incorrect password.",
+          "auth/email-already-in-use":
+            "An account already exists with this email address.",
+          "auth/weak-password":
+            "Password should be at least 6 characters long.",
+          "auth/invalid-email": "Invalid email address.",
+          "auth/invalid-credential": "Invalid email or password.",
+          "auth/too-many-requests":
+            "Too many failed attempts. Please try again later.",
+          "auth/user-disabled": "This account has been disabled.",
+          "auth/operation-not-allowed":
+            "Email/password accounts are not enabled.",
+          "auth/network-request-failed":
+            "Network error. Please check your connection.",
+        };
+
+        return (
+          errorMessages[errorCode] ||
+          "An unexpected error occurred. Please try again."
+        );
+      }
+
+      // Logout function
+      async function logoutUser() {
+        try {
+          // Update last activity before signing out
+          const currentUser = auth.currentUser;
+          if (currentUser) {
+            await updateDoc(doc(db, "users", currentUser.uid), {
+              lastActivity: serverTimestamp(),
+            });
+          }
+
+          await signOut(auth);
+
+          // Clear all user data from localStorage
+          const keysToRemove = [
+            "LoggedInUserID",
+            "LoggedInUserName",
+            "LoggedInUserEmail",
+            "LoggedInUserRole",
+            "ProfileCompletionStatus",
+          ];
+
+          keysToRemove.forEach((key) => localStorage.removeItem(key));
+
+          console.log("User logged out successfully");
+          return { success: true };
+        } catch (error) {
+          console.error("Logout error:", error);
+          return {
+            success: false,
+            error: error.message,
+          };
+        }
+      }
+
+      // Auth state observer
+      function initAuthStateObserver() {
+        onAuthStateChanged(auth, async (user) => {
+          if (user) {
+            // User is signed in
+            console.log("User is signed in:", user.uid);
+
+            try {
+              const userProfile = await getUserProfile(user.uid);
+              if (userProfile.success) {
+                const userData = userProfile.data;
+
+                // Update localStorage with current user data
+                localStorage.setItem("LoggedInUserID", user.uid);
+                localStorage.setItem("LoggedInUserName", userData.name || "");
+                localStorage.setItem("LoggedInUserEmail", userData.email || "");
+                localStorage.setItem(
+                  "LoggedInUserRole",
+                  userData.role || "user"
+                );
+                localStorage.setItem(
+                  "ProfileCompletionStatus",
+                  userData.profileComplete || false
+                );
+
+                // Update last activity
+                await updateDoc(doc(db, "users", user.uid), {
+                  lastActivity: serverTimestamp(),
+                });
+              }
+            } catch (error) {
+              console.error("Error updating user data:", error);
+            }
+          } else {
+            // User is signed out
+            console.log("User is signed out");
+
+            // Clear localStorage
+            const keysToRemove = [
+              "LoggedInUserID",
+              "LoggedInUserName",
+              "LoggedInUserEmail",
+              "LoggedInUserRole",
+              "ProfileCompletionStatus",
+            ];
+
+            keysToRemove.forEach((key) => localStorage.removeItem(key));
+          }
+        });
+      }
+
+      // Initialize auth state observer when script loads
+      initAuthStateObserver();
+
+      // Export functions for use in HTML
+      window.authFunctions = {
+        registerUser,
+        loginUser,
+        getUserProfile,
+        updateUserProfile,
+        resetPassword,
+        logoutUser,
+        validatePassword,
+        validateEmail,
+        checkEmailExists,
+        getErrorMessage,
+      };
+
+      // For backward compatibility
+      window.registerUser = registerUser;
+      window.loginUser = loginUser;
+      window.logoutUser = logoutUser;
+      window.resetPassword = resetPassword;
+    </script>
+    <script>
+      // Tab switching functionality
+      document.addEventListener("DOMContentLoaded", function () {
+        const loginTab = document.getElementById("login-tab");
+        const signupTab = document.getElementById("signup-tab");
+        const loginForm = document.getElementById("login-form");
+        const signupForm = document.getElementById("signup-form");
+        const showSignupLink = document.getElementById("show-signup");
+        const showLoginLink = document.getElementById("show-login");
+
+        // Function to show login form
+        function showLogin() {
+          loginTab.classList.add("active");
+          signupTab.classList.remove("active");
+          loginForm.style.display = "block";
+          signupForm.style.display = "none";
+
+          // Clear any alerts
+          document.getElementById("alert-container").innerHTML = "";
+        }
+
+        // Function to show signup form
+        function showSignup() {
+          signupTab.classList.add("active");
+          loginTab.classList.remove("active");
+          signupForm.style.display = "block";
+          loginForm.style.display = "none";
+
+          // Clear any alerts
+          document.getElementById("alert-container").innerHTML = "";
+        }
+
+        // Event listeners for tab clicks
+        loginTab.addEventListener("click", showLogin);
+        signupTab.addEventListener("click", showSignup);
+
+        // Event listeners for form links
+        showSignupLink.addEventListener("click", function (e) {
+          e.preventDefault();
+          showSignup();
+        });
+
+        showLoginLink.addEventListener("click", function (e) {
+          e.preventDefault();
+          showLogin();
+        });
+      });
+
+      // Form submission handlers
+      document.addEventListener("DOMContentLoaded", function () {
+        const loginFormElement = document.getElementById("login-form-element");
+        const signupFormElement = document.getElementById(
+          "signup-form-element"
+        );
+
+        // Login form submission
+        loginFormElement.addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const email = document.getElementById("login-email").value;
+          const password = document.getElementById("login-password").value;
+
+          // Basic validation
+          if (!email || !password) {
+            showAlert("Please fill in all fields", "error");
+            return;
+          }
+
+          if (!window.authFunctions.validateEmail(email)) {
+            showAlert("Please enter a valid email address", "error");
+            return;
+          }
+
+          try {
+            // Disable submit button to prevent double submission
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Logging in...";
+
+            const result = await window.loginUser(email, password);
+
+            if (result.success) {
+              showAlert("Login successful! Redirecting...", "success");
+
+              // Redirect after successful login
+              setTimeout(() => {
+                window.location.href = "/"; // Change to your dashboard URL
+              }, 1500);
+            } else {
+              showAlert(result.message || "Login failed", "error");
+            }
+          } catch (error) {
+            console.error("Login error:", error);
+            showAlert("An unexpected error occurred", "error");
+          } finally {
+            // Re-enable submit button
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Log In";
+          }
+        });
+
+        // Signup form submission - FIXED VERSION
+        signupFormElement.addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const name = document.getElementById("signup-name").value;
+          const email = document.getElementById("signup-email").value;
+          const password = document.getElementById("signup-password").value;
+          const agreeTerms = document.getElementById("agree-terms").checked;
+
+          // Basic validation
+          if (!name || !email || !password) {
+            showAlert("Please fill in all fields", "error");
+            return;
+          }
+
+          if (!window.authFunctions.validateEmail(email)) {
+            showAlert("Please enter a valid email address", "error");
+            return;
+          }
+
+          const passwordValidation =
+            window.authFunctions.validatePassword(password);
+          if (!passwordValidation.valid) {
+            showAlert(passwordValidation.message, "error");
+            return;
+          }
+
+          if (!agreeTerms) {
+            showAlert("Please agree to the Terms and Privacy Policy", "error");
+            return;
+          }
+
+          try {
+            // Disable submit button to prevent double submission
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Creating Account...";
+
+            const result = await window.registerUser(name, email, password);
+
+            if (result.success) {
+              showAlert(
+                "Account created successfully! Please log in with your credentials.",
+                "success"
+              );
+
+              // Switch to login form after successful registration
+              setTimeout(() => {
+                // Clear the signup form
+                document.getElementById("signup-form-element").reset();
+                
+                // Switch to login tab
+                const loginTab = document.getElementById("login-tab");
+                const signupTab = document.getElementById("signup-tab");
+                const loginForm = document.getElementById("login-form");
+                const signupForm = document.getElementById("signup-form");
+                
+                loginTab.classList.add("active");
+                signupTab.classList.remove("active");
+                loginForm.style.display = "block";
+                signupForm.style.display = "none";
+                
+                // Clear any alerts
+                document.getElementById("alert-container").innerHTML = "";
+              }, 2000);
+            } else {
+              showAlert(result.message || "Registration failed", "error");
+            }
+          } catch (error) {
+            console.error("Registration error:", error);
+            showAlert("An unexpected error occurred", "error");
+          } finally {
+            // Re-enable submit button
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Create Account";
+          }
+        });
+      });
+
+      // Set up password toggle functionality
+      setupPasswordToggle("login-password");
+      setupPasswordToggle("signup-password");
+
+      function setupPasswordToggle(inputId) {
+        const passwordInput = document.getElementById(inputId);
+        const parentDiv = passwordInput.parentElement;
+
+        // Create the eye icon
+        const toggleIcon = document.createElement("i");
+        toggleIcon.className = "fas fa-eye-slash password-toggle";
+        toggleIcon.style.position = "absolute";
+        toggleIcon.style.right = "45px"; // Position it before the lock icon
+        toggleIcon.style.top = "50%";
+        toggleIcon.style.transform = "translateY(-50%)";
+        toggleIcon.style.cursor = "pointer";
+        toggleIcon.style.color = "var(--gray-400)";
+
+        // Add click event listener
+        toggleIcon.addEventListener("click", function () {
+          // Toggle password visibility
+          if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            toggleIcon.className = "fas fa-eye password-toggle";
+          } else {
+            passwordInput.type = "password";
+            toggleIcon.className = "fas fa-eye-slash password-toggle";
+          }
+        });
+
+        // Insert the eye icon into the password input container
+        parentDiv.insertBefore(toggleIcon, passwordInput.nextSibling);
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // Get the buttons from the main page
+        const loginButton = document.querySelector(
+          ".auth-buttons .btn-outline"
+        );
+        const getStartedButton = document.querySelector(
+          ".auth-buttons .btn-primary"
+        );
+
+        if (loginButton) {
+          loginButton.addEventListener("click", function () {
+            // Navigate to login/signup page with login tab active (default)
+            window.location.href = "login-signup.html";
+          });
+        }
+
+        if (getStartedButton) {
+          getStartedButton.addEventListener("click", function () {
+            // Navigate to login/signup page with signup tab active
+            window.location.href = "login-signup.html?tab=signup";
+          });
+        }
+
+        // On the login/signup page, check if we should show signup tab
+        const urlParams = new URLSearchParams(window.location.search);
+        const activeTab = urlParams.get("tab");
+
+        if (activeTab === "signup") {
+          // If URL has ? tab=signup, activate the signup tab
+          const loginTab = document.getElementById("login-tab");
+          const signupTab = document.getElementById("signup-tab");
+          const loginForm = document.getElementById("login-form");
+          const signupForm = document.getElementById("signup-form");
+
+          if (loginTab && signupTab) {
+            loginTab.classList.remove("active");
+            signupTab.classList.add("active");
+
+            if (loginForm && signupForm) {
+              loginForm.style.display = "none";
+              signupForm.style.display = "block";
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

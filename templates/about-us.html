@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us - CVisionary</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../static/css/about-us.css" />
+  </head>
+  <body>
+    <!-- Header (Integrated from howitworks.html logic) -->
+    <header class="header">
+      <nav class="nav">
+        <a href="/index" class="logo">
+          <div class="logo-icon">
+            <i class="fas fa-brain"></i>
+          </div>
+          CVisionary
+        </a>
+
+        <div class="nav-links">
+          <a href="/features">Features</a>
+          <a href="/howitworks">Workflow</a>
+          <a href="/pricing">Pricing</a>
+          <a href="/upload">Upload</a>
+          <a href="/about-us" class="active">About Us</a>
+        </div>
+
+        <!-- Authentication / User Menu (dynamic) -->
+        <div id="auth-section" class="auth-hidden">
+          <!-- Loading spinner, visible initially -->
+          <div id="auth-loading" class="auth-spinner-container">
+            <i class="fas fa-spinner fa-spin"></i>
+          </div>
+
+          <!-- Default (unauthenticated) buttons - Initially hidden -->
+          <div class="auth-buttons hidden" id="auth-buttons-group">
+            <button class="btn btn-outline" id="login-button">Log In</button>
+            <button class="btn btn-primary" id="get-started-button">
+              Get Started
+            </button>
+          </div>
+
+          <!-- User Menu (authenticated) - Initially hidden -->
+          <div class="user-menu hidden" id="user-menu-group">
+            <div class="user-info" id="user-profile-link">
+              <div class="user-avatar" id="header-avatar">
+                <i class="fas fa-user"></i>
+              </div>
+              <div>
+                <div style="font-weight: 600" id="header-name">Loading...</div>
+                <div
+                  style="font-size: 0.875rem; color: var(--gray-500)"
+                  id="header-email"
+                >
+                  Loading...
+                </div>
+              </div>
+            </div>
+            <button class="logout-btn" id="logout-btn">
+              <i class="fas fa-sign-out-alt"></i>
+              Logout
+            </button>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <section class="hero-section">
+      <div class="container">
+        <div class="hero-content">
+          <span class="hero-subtitle">OUR STORY</span>
+          <h1 class="hero-title">Revolutionizing Recruitment with AI</h1>
+          <p class="hero-description">
+            At CVisionary, we're on a mission to transform how job seekers and
+            employers connect by leveraging the power of artificial intelligence
+            to create perfect matches.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-light">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-image">
+            <img src="../static/images/cv.webp" alt="About CVisionary" />
+            <div class="image-overlay"></div>
+          </div>
+          <div class="about-content">
+            <h3>Who We Are</h3>
+            <p>
+              At CVisionary, we are a team of forward-thinking computer science
+              graduates driven by a shared mission: to revolutionize the
+              job-seeking experience through the power of artificial
+              intelligence. Frustrated by the limitations of traditional resume
+              reviews and manual job searching, we set out to create a smarter,
+              more inclusive solution.
+            </p>
+            <p>
+              Our platform is built on cutting-edge AI that not only analyzes
+              and optimizes your CV but also matches you with tailored job
+              opportunities based on your skills, experience, and career goals.
+              We believe that everyone deserves access to intelligent career
+              support—without the high costs or generic advice.
+            </p>
+            <p>
+              From resume parsing and job recommendations to actionable CV
+              improvement tips, CVisionary is your all-in-one digital career
+              assistant. As we grow, we aim to integrate live job markets,
+              multilingual support, personalized analytics, and real-time
+              chatbot guidance—ensuring every user is empowered to take their
+              next career step with confidence.
+            </p>
+            <p>
+              We're not just building software. We're building a bridge between
+              job seekers and their future.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- <section class="section">
+      <div class="container">
+        <h2 class="section-title">Key Facts About Us</h2>
+        <p class="section-subtitle">
+          CVisionary has grown from a small startup to a global leader in
+          AI-powered recruitment solutions.
+        </p>
+        <div class="stats-container">
+          <div class="stat-item">
+            <div class="stat-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <div class="stat-number">2.5M+</div>
+            <div class="stat-label">Job Seekers Placed</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-icon">
+              <i class="fas fa-building"></i>
+            </div>
+            <div class="stat-number">12K+</div>
+            <div class="stat-label">Partner Companies</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-icon">
+              <i class="fas fa-globe"></i>
+            </div>
+            <div class="stat-number">35+</div>
+            <div class="stat-label">Countries Served</div>
+          </div>
+        </div>
+      </div>
+    </section> -->
+
+    <section class="section mission-section">
+      <div class="container">
+        <div class="mission-container">
+          <div class="mission-content">
+            <h3 class="mission-title">Our Mission & Values</h3>
+            <p class="mission-description">
+              Our mission is to create a world where every person can find
+              fulfilling work and every company can build exceptional teams. We
+              believe in using technology to enhance human potential, not
+              replace it.
+            </p>
+            <div class="mission-values">
+              <div class="value-item">
+                <div class="value-icon">
+                  <i class="fas fa-handshake"></i>
+                </div>
+                <div class="value-content">
+                  <h4>Integrity</h4>
+                  <p>
+                    We operate with honesty and transparency in all our
+                    interactions with clients, candidates, and team members.
+                  </p>
+                </div>
+              </div>
+              <div class="value-item">
+                <div class="value-icon">
+                  <i class="fas fa-lightbulb"></i>
+                </div>
+                <div class="value-content">
+                  <h4>Innovation</h4>
+                  <p>
+                    We continuously push the boundaries of what's possible with
+                    AI to solve real-world recruitment challenges.
+                  </p>
+                </div>
+              </div>
+              <div class="value-item">
+                <div class="value-icon">
+                  <i class="fas fa-balance-scale"></i>
+                </div>
+                <div class="value-content">
+                  <h4>Diversity & Inclusion</h4>
+                  <p>
+                    We believe diverse teams are stronger teams, and our
+                    technology is designed to reduce bias in hiring.
+                  </p>
+                </div>
+              </div>
+              <div class="value-item">
+                <div class="value-icon">
+                  <i class="fas fa-heart"></i>
+                </div>
+                <div class="value-content">
+                  <h4>Empathy</h4>
+                  <p>
+                    We understand the human side of hiring and design our
+                    solutions with both employers and job seekers in mind.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="vision-image">
+            <img src="../static/images/vision.png" alt="Our Vision" />
+            <div class="vision-overlay"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section team-section">
+      <div class="container">
+        <h2 class="section-title">Meet Our Leadership Team</h2>
+        <p class="section-subtitle">
+          Our diverse team brings together expertise in AI, machine learning,
+          HR, and business to create innovative recruitment solutions.
+        </p>
+        <div class="team-grid">
+          <div class="team-member">
+            <img
+              src="../static/images/ayush.png"
+              alt="Ayush Shrstha"
+              class="team-photo"
+            />
+            <div class="team-info">
+              <h3 class="team-name">Ayush Shrestha</h3>
+              <p class="team-position">Student ID: (placeholder)</p>
+              <p>Email:</p>
+              <p class="team-bio"></p>
+              <div class="team-social">
+                <a href="https://www.linkedin.com/in/ayush-shrestha-np/"
+                  ><i class="fab fa-linkedin"></i
+                ></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+              </div>
+            </div>
+          </div>
+          <div class="team-member">
+            <img
+              src="../static/images/suprem.png"
+              alt="Suprem Shrestha"
+              class="team-photo"
+            />
+            <div class="team-info">
+              <h3 class="team-name">Suprem Shrestha</h3>
+              <p class="team-position">Student ID: 25123849</p>
+              <p>Email: suprem_25123849@sunway.edu.np</p>
+              <p class="team-bio"></p>
+              <div class="team-social">
+                <a href="https://www.linkedin.com/in/supremshrestha/"
+                  ><i class="fab fa-linkedin"></i
+                ></a>
+                <a href="https://github.com/SupremeStha"
+                  ><i class="fab fa-github"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+          <div class="team-member">
+            <img
+              src="../static/images/yug.png"
+              alt="Yug Adhikari"
+              class="team-photo"
+            />
+            <div class="team-info">
+              <h3 class="team-name">Yug Adhikari</h3>
+              <p class="team-position">Student ID: 25123860</p>
+              <p>Email: yug_25123860@sunway.edu.np</p>
+              <p class="team-bio"></p>
+              <div class="team-social">
+                <a href="https://www.linkedin.com/in/yug-adhikari/"
+                  ><i class="fab fa-linkedin"></i
+                ></a>
+                <a href="https://github.com/Yug78-ops"
+                  ><i class="fab fa-github"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+          <div class="team-member">
+            <img
+              src="../static/images/sid.png"
+              alt="Siddhant Shrestha"
+              class="team-photo"
+            />
+            <div class="team-info">
+              <h3 class="team-name">Siddhant Shrestha</h3>
+              <p class="team-position">Student ID: 25123845</p>
+              <p>Email: siddhant_25123845@sunway.edu.np</p>
+              <p class="team-bio"></p>
+              <div class="team-social">
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section sdg-section">
+      <div class="container">
+        <div class="section-title-wrapper">
+          <span class="section-tag">GLOBAL COMMITMENT</span>
+          <h2 class="section-title">Our Contribution to UN SDGs</h2>
+          <p class="section-description">
+            CVisionary is committed to making a positive impact on global
+            sustainable development. We proudly align our efforts with the
+            following United Nations Sustainable Development Goals.
+          </p>
+        </div>
+        <div class="sdg-grid">
+          <div class="sdg-card">
+            <img
+              src="../static/images/sdg8.jpg"
+              alt="SDG 8 Icon"
+              class="sdg-icon"
+            />
+            <h3 class="sdg-title">Goal 8: Decent Work and Economic Growth</h3>
+
+            <div class="sdg-description-container">
+              <h3 class="hover-title">
+                Goal 8: Decent Work and Economic Growth
+              </h3>
+              <p class="sdg-description">
+                SDG 8 promotes sustained, inclusive, and sustainable economic
+                growth, full and productive employment, and decent work for all.
+              </p>
+              <p class="sdg-description">
+                CVisionary directly supports employability by helping people
+                find jobs that match their qualifications and by giving them the
+                tools to present themselves effectively in the job market.
+              </p>
+              <p class="sdg-description">
+                By improving access to job opportunities through smart matching
+                and CV optimization, CVisionary boosts individuals' chances of
+                securing meaningful employment, contributing to economic
+                productivity and workforce inclusion.
+              </p>
+            </div>
+          </div>
+
+          <div class="sdg-card">
+            <img
+              src="../static/images/sdg9.jpg"
+              alt="SDG 9 Icon"
+              class="sdg-icon"
+            />
+            <h3 class="sdg-title">
+              Goal 9: Industry Innovation and Infrastructure
+            </h3>
+
+            <div class="sdg-description-container">
+              <h3 class="hover-title">
+                Goal 9: Industry Innovation and Infrastructure
+              </h3>
+              <p class="sdg-description">
+                SDG 9 aims to promote inclusive and sustainable
+                industrialization, and foster innovation. It encourages the
+                development of quality, reliable, and sustainable
+                infrastructure, including technological solutions that support
+                human well-being and economic development.
+              </p>
+              <p class="sdg-description">
+                CVisionary is a technology-driven platform that innovatively
+                applies artificial intelligence to improve recruitment
+                processes—something that supports digital infrastructure and
+                promotes sustainable innovation in employment services.
+              </p>
+              <p class="sdg-description">
+                CVisionary contributes to digital innovation by transforming how
+                resumes are analyzed and matched with jobs through AI and
+                machine learning. It builds digital infrastructure that connects
+                job seekers with opportunities efficiently, reduces
+                inefficiencies, and fosters innovation in the recruitment
+                sector.
+              </p>
+            </div>
+          </div>
+
+          <div class="sdg-card">
+            <img
+              src="../static/images/sdg10.jpg"
+              alt="SDG 10 Icon"
+              class="sdg-icon"
+            />
+            <h3 class="sdg-title">Goal 10: Reduced Inequalities</h3>
+
+            <div class="sdg-description-container">
+              <h3 class="hover-title">Goal 10: Reduced Inequalities</h3>
+              <p class="sdg-description">
+                SDG 10 aims to reduce inequality within and among countries. It
+                focuses on empowering marginalized and disadvantaged groups,
+                ensuring equal opportunities and reducing disparities in income
+                and access to resources.
+              </p>
+              <p class="sdg-description">
+                CVisionary directly contributes to SDG 10 by promoting equal
+                access to job opportunities for all individuals, regardless of
+                their background. Our AI-driven platform minimizes bias in
+                recruitment, ensuring that candidates from diverse and
+                marginalized groups have fair chances of employment.
+              </p>
+              <p class="sdg-description">
+                By providing personalized CV optimization and job matching,
+                CVisionary helps bridge the gap for underrepresented
+                communities, empowering them to compete effectively in the job
+                market. Our commitment to reducing inequalities aligns with the
+                global goal of creating a more equitable society.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section tech-stack-section">
+      <div class="container">
+        <div class="section-title-wrapper">
+          <span class="section-tag">OUR TECHNOLOGY</span>
+          <h2 class="section-title">
+            Tools and Technologies Powering CVisionary
+          </h2>
+          <p class="section-description">
+            We leverage a robust stack of cutting-edge tools and technologies to
+            build, deploy, and maintain our intelligent recruitment platform,
+            ensuring scalability, performance, and security.
+          </p>
+        </div>
+        <div class="tech-grid">
+          <div class="tech-item">
+            <i class="fab fa-python tech-icon"></i>
+            <h4 class="tech-name">Python</h4>
+            <p class="tech-description">Backend Logic, AI/ML</p>
+          </div>
+          <div class="tech-item">
+            <i class="fab fa-js-square tech-icon"></i>
+            <h4 class="tech-name">JavaScript</h4>
+            <p class="tech-description">Frontend Interactivity</p>
+          </div>
+          <div class="tech-item">
+            <i class="fab fa-html5 tech-icon"></i>
+            <h4 class="tech-name">HTML5</h4>
+            <p class="tech-description">Structure</p>
+          </div>
+          <div class="tech-item">
+            <i class="fab fa-css3-alt tech-icon"></i>
+            <h4 class="tech-name">CSS3</h4>
+            <p class="tech-description">Styling</p>
+          </div>
+          <div class="tech-item">
+            <i class="fas fa-database tech-icon"></i>
+            <h4 class="tech-name">Firestore</h4>
+            <p class="tech-description">Database</p>
+          </div>
+          <div class="tech-item">
+            <i class="fab fa-google tech-icon"></i>
+            <h4 class="tech-name">Google Cloud</h4>
+            <p class="tech-description">Infrastructure</p>
+          </div>
+          <div class="tech-item">
+            <i class="fas fa-cloud tech-icon"></i>
+            <h4 class="tech-name">Firebase Auth</h4>
+            <p class="tech-description">Authentication</p>
+          </div>
+          <div class="tech-item">
+            <i class="fas fa-code-branch tech-icon"></i>
+            <h4 class="tech-name">Git/GitHub</h4>
+            <p class="tech-description">Version Control</p>
+          </div>
+          <div class="tech-item">
+            <i class="fas fa-pencil-ruler tech-icon"></i>
+            <h4 class="tech-name">Figma</h4>
+            <p class="tech-description">UI/UX Prototyping</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section timeline-section">
+      <div class="container">
+        <h2 class="section-title">Our Journey</h2>
+        <p class="section-subtitle">
+          From concept to global leader, see how CVisionary has evolved over the
+          years.
+        </p>
+        <div class="image-wrapper">
+          <video
+            id="custom-video"
+            class="main-image"
+            autoplay
+            muted
+            loop
+            playsinline
+          >
+            <source src="../static/images/CVisionary.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+
+          <div class="video-controls">
+            <button id="play-pause">⏸️</button>
+            <button id="mute-unmute">🔇</button>
+            <input type="range" id="seek-slider" value="0" min="0" step="1" />
+            <span id="current-time">0:00</span> /
+            <span id="duration">0:00</span>
+          </div>
+        </div>
+
+        <!-- <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-icon">
+              <i class="fas fa-rocket"></i>
+            </div>
+            <div class="timeline-content">
+              <span class="timeline-date">March 2020</span>
+              <h3 class="timeline-title">CVisionary Founded</h3>
+              <p class="timeline-description">
+                Sarah Johnson and David Chen founded CVisionary with a mission
+                to transform recruitment using AI.
+              </p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-icon">
+              <i class="fas fa-code"></i>
+            </div>
+            <div class="timeline-content">
+              <span class="timeline-date">November 2020</span>
+              <h3 class="timeline-title">First Product Launch</h3>
+              <p class="timeline-description">
+                Launched our beta platform with 50 partner companies, achieving
+                a 92% satisfaction rate.
+              </p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-icon">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="timeline-content">
+              <span class="timeline-date">June 2021</span>
+              <h3 class="timeline-title">Series A Funding</h3>
+              <p class="timeline-description">
+                Secured $15M in Series A funding to expand our team and enhance
+                our AI capabilities.
+              </p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-icon">
+              <i class="fas fa-globe-americas"></i>
+            </div>
+            <div class="timeline-content">
+              <span class="timeline-date">January 2022</span>
+              <h3 class="timeline-title">Global Expansion</h3>
+              <p class="timeline-description">
+                Opened offices in London and Singapore, expanding our services
+                to Europe and Asia.
+              </p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-icon">
+              <i class="fas fa-trophy"></i>
+            </div>
+            <div class="timeline-content">
+              <span class="timeline-date">November 2023</span>
+              <h3 class="timeline-title">Industry Recognition</h3>
+              <p class="timeline-description">
+                Named "HR Tech Company of the Year" and reached the milestone of
+                1 million successful placements.
+              </p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-icon">
+              <i class="fas fa-star"></i>
+            </div>
+            <div class="timeline-content">
+              <span class="timeline-date">April 2024</span>
+              <h3 class="timeline-title">Present Day</h3>
+              <p class="timeline-description">
+                Serving 12,000+ companies across 35 countries with a team of
+                120+ professionals dedicated to transforming recruitment.
+              </p>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </section>
+
+    <section class="section market-impact-section">
+      <div class="container">
+        <div class="section-title-wrapper">
+          <span class="section-tag">MARKET IMPACT</span>
+          <h2 class="section-title">Our Impact on the Job Market</h2>
+          <p class="section-description">
+            CVisionary is revolutionizing the recruitment landscape by
+            addressing critical gaps in the current job market with AI-powered
+            solutions.
+          </p>
+        </div>
+
+        <div class="market-content-grid">
+          <div class="market-card primary-card">
+            <div class="market-card-header">
+              <div class="market-icon">
+                <i class="fas fa-bullseye"></i>
+              </div>
+              <h3>Market Fit and Relevance</h3>
+            </div>
+            <p>
+              The current job market is highly competitive, with both job
+              seekers and employers relying increasingly on digital tools to
+              streamline the hiring process. However, many existing resume
+              screening and job search platforms offer limited personalization,
+              rely on outdated keyword matching, and fail to provide actionable
+              feedback to applicants.
+            </p>
+            <p>
+              In this context, CVisionary fills a critical gap by offering a
+              modern, AI-powered alternative that caters to the evolving needs
+              of users who demand more intelligent, accurate, and helpful career
+              support systems.
+            </p>
+            <p>
+              CVisionary fits into the market as a hybrid solution—combining
+              resume parsing, job recommendation, and CV enhancement features in
+              one integrated platform. Its ability to analyze resumes through
+              context-aware AI and match them with real-time job data makes it
+              suitable for a wide range of users, including fresh graduates,
+              mid-career professionals, and institutions seeking to support
+              employability.
+            </p>
+          </div>
+
+          <div class="market-advantages">
+            <div class="advantages-header">
+              <div class="market-icon secondary">
+                <i class="fas fa-trophy"></i>
+              </div>
+              <h3>What Makes CVisionary Better</h3>
+            </div>
+
+            <div class="advantages-grid">
+              <div class="advantage-item">
+                <div class="advantage-icon">
+                  <i class="fas fa-robot"></i>
+                </div>
+                <div class="advantage-content">
+                  <h4>AI-Powered Personalization</h4>
+                  <p>
+                    Unlike many generic platforms, CVisionary uses advanced
+                    natural language processing (via Gemini 2.0) to understand
+                    the context, relevance, and semantics of a user's resume
+                    content.
+                  </p>
+                </div>
+              </div>
+
+              <div class="advantage-item">
+                <div class="advantage-icon">
+                  <i class="fas fa-layer-group"></i>
+                </div>
+                <div class="advantage-content">
+                  <h4>Integrated System</h4>
+                  <p>
+                    Instead of users switching between different platforms for
+                    resume writing, job searching, and performance feedback,
+                    CVisionary combines all these services into a single,
+                    user-friendly web application.
+                  </p>
+                </div>
+              </div>
+
+              <div class="advantage-item">
+                <div class="advantage-icon">
+                  <i class="fas fa-sync-alt"></i>
+                </div>
+                <div class="advantage-content">
+                  <h4>Real-Time Market Adaptation</h4>
+                  <p>
+                    CVisionary is designed to stay updated with dynamic job
+                    trends through future integration with live job portals like
+                    LinkedIn, Indeed, and Glassdoor.
+                  </p>
+                </div>
+              </div>
+
+              <div class="advantage-item">
+                <div class="advantage-icon">
+                  <i class="fas fa-balance-scale"></i>
+                </div>
+                <div class="advantage-content">
+                  <h4>Bias Reduction and Fairness</h4>
+                  <p>
+                    The system is built with fairness-aware algorithms and
+                    trained on diverse datasets to reduce biases typically seen
+                    in AI recruitment tools.
+                  </p>
+                </div>
+              </div>
+
+              <div class="advantage-item">
+                <div class="advantage-icon">
+                  <i class="fas fa-expand-arrows-alt"></i>
+                </div>
+                <div class="advantage-content">
+                  <h4>Scalability and Accessibility</h4>
+                  <p>
+                    With plans to support multilingual functionality and
+                    region-specific job boards, CVisionary aims to expand its
+                    reach across global markets.
+                  </p>
+                </div>
+              </div>
+
+              <div class="advantage-item">
+                <div class="advantage-icon">
+                  <i class="fas fa-rocket"></i>
+                </div>
+                <div class="advantage-content">
+                  <h4>Future-Ready Features</h4>
+                  <p>
+                    Upcoming enhancements such as chatbot assistance, a built-in
+                    CV builder, and career analytics dashboards further
+                    distinguish CVisionary from the competition.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="market-summary">
+          <div class="summary-content">
+            <h3>Market Impact Summary</h3>
+            <p>
+              CVisionary is positioned not just as a resume screener but as a
+              transformational career development platform. By delivering
+              personalization, automation, and accuracy in one tool, it aligns
+              well with the current and future demands of the digital job
+              market. As employers continue to prioritize efficient recruitment
+              and job seekers seek smarter career tools, CVisionary has the
+              potential to become a market leader in AI-driven career support
+              solutions.
+            </p>
+          </div>
+          <div class="summary-visual">
+            <div class="impact-stat">
+              <div class="stat-circle">
+                <i class="fas fa-chart-line"></i>
+              </div>
+              <div class="stat-text">Market Leader Potential</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-container">
+          <h2 class="cta-title">
+            Ready to Transform Your Recruitment Process?
+          </h2>
+          <p class="cta-description">
+            Join thousands of companies and millions of job seekers who are
+            finding their perfect match with CVisionary's AI-powered platform.
+          </p>
+          <div class="cta-buttons">
+            <button class="btn btn-white">Request a Demo</button>
+            <button class="btn btn-outline-white">Learn More</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div class="footer-logo">
+              <div class="footer-logo-icon">
+                <i class="fas fa-brain"></i>
+              </div>
+              CVisionary
+            </div>
+            <p class="footer-description">
+              Transforming recruitment through the power of artificial
+              intelligence. Connecting the right talent with the right
+              opportunities.
+            </p>
+            <div class="social-icons">
+              <a href="#" class="social-icon"
+                ><i class="fab fa-linkedin"></i
+              ></a>
+              <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+              <a href="#" class="social-icon"
+                ><i class="fab fa-facebook"></i
+              ></a>
+              <a href="#" class="social-icon"
+                ><i class="fab fa-instagram"></i
+              ></a>
+            </div>
+          </div>
+          <div>
+            <h4 class="footer-heading">Company</h4>
+            <div class="footer-links">
+              <a href="about.html">About Us</a>
+              <a href="#">Careers</a>
+              <a href="#">Blog</a>
+              <a href="#">Press</a>
+              <a href="#">Contact</a>
+            </div>
+          </div>
+          <div>
+            <h4 class="footer-heading">Product</h4>
+            <div class="footer-links">
+              <a href="features.html">Features</a>
+              <a href="howitworks.html">How It Works</a>
+              <a href="#">Pricing</a>
+              <a href="#">Case Studies</a>
+              <a href="#">Testimonials</a>
+            </div>
+          </div>
+          <div>
+            <h4 class="footer-heading">Resources</h4>
+            <div class="footer-links">
+              <a href="#">Help Center</a>
+              <a href="#">Documentation</a>
+              <a href="#">API Reference</a>
+              <a href="#">Privacy Policy</a>
+              <a href="#">Terms of Service</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>© 2025 CVisionary. All rights reserved.</p>
+          <div class="footer-bottom-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Cookie Policy</a>
+            <a href="#">Sitemap</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Firebase and Authentication Scripts (Copied from howitworks.html for consistency) -->
+    <script type="module">
+      // Import Firebase modules
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+      import {
+        getAuth,
+        onAuthStateChanged,
+        signOut,
+      } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+      import {
+        getFirestore,
+        doc,
+        getDoc,
+        setDoc, // Import setDoc for creating initial user doc
+        updateDoc, // Import updateDoc for updating user data
+      } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+      // Firebase configuration (using the one from activity2.html)
+      const firebaseConfig = {
+        apiKey: "AIzaSyCyw-l5jQMZS77ZUcgLEY3GnbJmZyFZ_mY",
+        authDomain: "authenticate1-ec031.firebaseapp.com",
+        projectId: "authenticate1-ec031",
+        storageBucket: "authenticate1-ec031.firebasestorage.app",
+        messagingSenderId: "259315058735",
+        appId: "1:259315058735:web:cc77ae09101c38f26e1eda",
+        measurementId: "G-2GVD4YQWEP",
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth();
+      const db = getFirestore();
+
+      // Global variable to store user data
+      let currentUserData = null;
+
+      // Utility Functions
+      function getInitials(name) {
+        if (!name) return "U";
+        return name
+          .split(" ")
+          .map((word) => word.charAt(0))
+          .join("")
+          .toUpperCase()
+          .slice(0, 2);
+      }
+
+      // Function to load user profile from Firestore
+      async function loadUserProfile(user) {
+        console.log("loadUserProfile: User object received:", user);
+        try {
+          const userDocRef = doc(db, "users", user.uid);
+          const userDocSnap = await getDoc(userDocRef);
+
+          if (userDocSnap.exists()) {
+            currentUserData = userDocSnap.data();
+            console.log(
+              "loadUserProfile: User data from Firestore:",
+              currentUserData
+            );
+          } else {
+            // If user document doesn't exist, create a basic one
+            currentUserData = {
+              name: user.displayName || "User",
+              email: user.email,
+              role: "user",
+              createdAt: new Date(),
+              lastLogin: new Date(),
+              loginCount: 1,
+            };
+            await setDoc(userDocRef, currentUserData); // Use setDoc for initial creation
+            console.log(
+              "loadUserProfile: Created new user document:",
+              currentUserData
+            );
+          }
+          // Update last login (can also increment login count here if desired)
+          await updateDoc(userDocRef, {
+            lastLogin: new Date(),
+            loginCount: (currentUserData.loginCount || 0) + 1,
+          });
+          console.log(
+            "loadUserProfile: User data updated with lastLogin/loginCount."
+          );
+
+          updateHeaderUI(); // Update the header after fetching/updating data
+        } catch (error) {
+          console.error("Error loading user profile:", error);
+          // Handle error, maybe show a generic "User" name
+          document.getElementById("header-name").textContent = "User";
+          document.getElementById("header-email").textContent = "Error";
+          document.getElementById("header-avatar").textContent = "U";
+        }
+      }
+
+      // Function to update the header UI based on user data
+      function updateHeaderUI() {
+        console.log("updateHeaderUI: Current User Data:", currentUserData);
+        const authSection = document.getElementById("auth-section");
+        const authLoading = document.getElementById("auth-loading"); // Get the loading spinner
+        const userMenu = document.getElementById("user-menu-group");
+        const authButtons = document.getElementById("auth-buttons-group");
+
+        // Hide the loading spinner first
+        authLoading.classList.add("hidden");
+
+        if (currentUserData) {
+          const initials = getInitials(
+            currentUserData.name || currentUserData.email
+          );
+          document.getElementById("header-avatar").textContent = initials;
+          document.getElementById("header-name").textContent =
+            currentUserData.name || "User";
+          document.getElementById("header-email").textContent =
+            currentUserData.email;
+
+          // Show user menu, hide auth buttons
+          userMenu.classList.remove("hidden");
+          authButtons.classList.add("hidden");
+          console.log(
+            "updateHeaderUI: Showing user menu, hiding auth buttons."
+          );
+        } else {
+          // Hide user menu, show auth buttons
+          userMenu.classList.add("hidden");
+          authButtons.classList.remove("hidden");
+          console.log(
+            "updateHeaderUI: Hiding user menu, showing auth buttons."
+          );
+        }
+        // Finally, make the entire auth section visible
+        authSection.classList.add("auth-visible");
+        authSection.classList.remove("auth-hidden");
+        console.log("updateHeaderUI: Auth section made visible.");
+      }
+
+      // Logout Function
+      async function logout() {
+        try {
+          await signOut(auth);
+          currentUserData = null; // Clear local user data
+          updateHeaderUI(); // Update UI to show login/signup buttons
+          console.log("User logged out successfully.");
+          // Optionally redirect to login page after logout
+          // window.location.href = "login-signup.html";
+        } catch (error) {
+          console.error("Error logging out:", error);
+          // You might want to display a non-alert message to the user here
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // Initial state for header: show spinner, hide buttons and user menu
+        document.getElementById("auth-loading").classList.remove("hidden");
+        document.getElementById("auth-buttons-group").classList.add("hidden");
+        document.getElementById("user-menu-group").classList.add("hidden");
+
+        // Add scroll animation for header
+        window.addEventListener("scroll", function () {
+          const header = document.querySelector(".header");
+          if (window.scrollY > 10) {
+            header.style.boxShadow = "var(--shadow)";
+            header.style.background = "rgba(255, 255, 255, 0.98)";
+          } else {
+            header.style.boxShadow = "var(--shadow-sm)";
+            header.style.background = "white";
+          }
+        });
+
+        // Get the buttons and user profile link from the main page
+        const loginButton = document.getElementById("login-button");
+        const getStartedButton = document.getElementById("get-started-button");
+        const logoutButton = document.getElementById("logout-btn");
+        const userProfileLink = document.getElementById("user-profile-link");
+
+        if (loginButton) {
+          loginButton.addEventListener("click", function () {
+            window.location.href = "/login-signup";
+          });
+        }
+
+        if (getStartedButton) {
+          getStartedButton.addEventListener("click", function () {
+            window.location.href = "/login-signup?tab=signup";
+          });
+        }
+
+        if (logoutButton) {
+          logoutButton.addEventListener("click", logout);
+        }
+
+        // Add click listener to the user profile section
+        if (userProfileLink) {
+          userProfileLink.addEventListener("click", function () {
+            window.location.href = "activity2.html"; // Navigate to the activity page
+          });
+        }
+
+        // Authentication State Observer
+        onAuthStateChanged(auth, async (user) => {
+          console.log(
+            "onAuthStateChanged: Authentication state changed. User:",
+            user
+          );
+          if (user) {
+            // User is signed in
+            await loadUserProfile(user); // Load profile and update UI
+          } else {
+            // User is signed out
+            currentUserData = null; // Clear user data
+            updateHeaderUI(); // Update UI to show login/signup buttons
+          }
+        });
+
+        // Set active navigation link for 'About Us' page
+        const currentPath = window.location.pathname.split("/").pop();
+        const navLinks = document.querySelectorAll(".nav-links a");
+        navLinks.forEach((link) => {
+          if (
+            link.getAttribute("href") &&
+            link.getAttribute("href").endsWith(currentPath)
+          ) {
+            link.classList.add("active");
+          } else {
+            link.classList.remove("active");
+          }
+        });
+      });
+      const video = document.getElementById("custom-video");
+      const playPauseBtn = document.getElementById("play-pause");
+      const muteUnmuteBtn = document.getElementById("mute-unmute");
+      const seekSlider = document.getElementById("seek-slider");
+      const currentTimeDisplay = document.getElementById("current-time");
+      const durationDisplay = document.getElementById("duration");
+
+      // Convert time in seconds to mm:ss format
+      function formatTime(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${minutes}:${secs < 10 ? "0" + secs : secs}`;
+      }
+
+      // Play/Pause Toggle
+      playPauseBtn.addEventListener("click", () => {
+        if (video.paused || video.ended) {
+          video.play();
+          playPauseBtn.textContent = "⏸️";
+        } else {
+          video.pause();
+          playPauseBtn.textContent = "▶️";
+        }
+      });
+
+      // Mute/Unmute Toggle
+      muteUnmuteBtn.addEventListener("click", () => {
+        video.muted = !video.muted;
+        muteUnmuteBtn.textContent = video.muted ? "🔇" : "🔊";
+      });
+
+      // Seek Slider
+      video.addEventListener("loadedmetadata", () => {
+        seekSlider.max = Math.floor(video.duration);
+        durationDisplay.textContent = formatTime(video.duration);
+      });
+
+      video.addEventListener("timeupdate", () => {
+        seekSlider.value = Math.floor(video.currentTime);
+        currentTimeDisplay.textContent = formatTime(video.currentTime);
+      });
+
+      seekSlider.addEventListener("input", () => {
+        video.currentTime = seekSlider.value;
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1896 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Results - CVisionary</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../static/css/styles.css" />
+    <style>
+      /* Base Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      }
+
+      :root {
+        --primary: #a1c9ff;
+        --primary-dark: #4997ff;
+        --primary-light: #818cf8;
+        --secondary: #cca6ff;
+        --gray-50: #f9fafb;
+        --gray-100: #f3f4f6;
+        --gray-200: #e5e7eb;
+        --gray-300: #d1d5db;
+        --gray-400: #9ca3af;
+        --gray-500: #6b7280;
+        --gray-600: #4b5563;
+        --gray-700: #374151;
+        --gray-800: #1f2937;
+        --gray-900: #111827;
+        --success: #10b981;
+        --error: #ef4444;
+        --warning: #f59e0b;
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+          0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+          0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+
+      body {
+        background-color: var(--gray-50);
+        color: var(--gray-900);
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 0 40px;
+      }
+
+      /* Header Styles (Copied from howitworks.html logic) */
+      .header {
+        background-color: white;
+        box-shadow: var(--shadow-sm);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        padding: 0 40px;
+      }
+
+      .nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 0;
+        max-width: 1440px;
+        margin: 0 auto;
+        height: 80px;
+      }
+
+      .logo {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+      }
+
+      .logo span {
+        color: var(--gray-900);
+      }
+
+      .logo-icon {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-light)
+        );
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 20px;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 40px;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: var(--gray-600);
+        font-weight: 500;
+        transition: all 0.3s ease;
+        font-size: 1.05rem;
+        position: relative;
+        padding: 6px 2px;
+      }
+
+      .nav-links a:hover {
+        color: var(--primary);
+      }
+
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 3px;
+        bottom: -3px;
+        left: 0;
+        background-color: var(--primary);
+        transition: width 0.3s ease;
+        border-radius: 2px;
+      }
+
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+
+      /* Active state for current page */
+      .nav-links a.active {
+        color: var(--primary);
+      }
+
+      .nav-links a.active::after {
+        width: 100%;
+      }
+
+      /* User Menu Styles (Copied from howitworks.html) */
+      .user-menu {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        cursor: pointer;
+        padding: 5px;
+        border-radius: 10px;
+        transition: background-color 0.2s ease;
+      }
+
+      .user-info:hover {
+        background-color: var(--gray-100);
+      }
+
+      .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 600;
+        font-size: 16px;
+      }
+
+      .logout-btn {
+        background: var(--error);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .logout-btn:hover {
+        background: #dc2626;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(239, 68, 68, 0.3);
+      }
+
+      /* Authentication Buttons (Copied from howitworks.html) */
+      .auth-buttons {
+        display: flex;
+        gap: 20px;
+      }
+
+      /* General Button Styles (Copied from howitworks.html) */
+      .btn {
+        padding: 12px 24px;
+        border-radius: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: none;
+        font-size: 1rem;
+      }
+
+      .btn-outline {
+        background-color: transparent;
+        border: 2px solid var(--primary);
+        color: var(--primary);
+      }
+
+      .btn-outline:hover {
+        background-color: var(--primary);
+        color: white;
+      }
+
+      .btn-primary {
+        background-color: var(--primary);
+        color: white;
+        box-shadow: 0 5px 15px rgba(79, 70, 229, 0.3);
+      }
+
+      .btn-primary:hover {
+        background-color: var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(79, 70, 229, 0.4);
+      }
+
+      /* Utility class for hiding elements */
+      .hidden {
+        display: none !important;
+      }
+
+      /* Style for initial hiding of auth section (Copied from howitworks.html) */
+      #auth-section.auth-hidden {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease-in-out;
+      }
+
+      #auth-section.auth-visible {
+        opacity: 1;
+        pointer-events: all;
+      }
+
+      /* Spinner styles for loading state (Copied from howitworks.html) */
+      .auth-spinner-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        color: var(--primary);
+        font-size: 1.5rem;
+        min-width: 120px;
+        min-height: 40px;
+      }
+
+      /* Page-specific styles from upload.html */
+      .upload-section {
+        padding-top: 150px; /* Adjusted for fixed header */
+        padding-bottom: 100px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .upload-section::before {
+        content: "";
+        position: absolute;
+        width: 600px;
+        height: 600px;
+        background: linear-gradient(
+          135deg,
+          rgba(79, 70, 229, 0.1),
+          rgba(129, 140, 248, 0.1)
+        );
+        border-radius: 50%;
+        top: -300px;
+        right: -200px;
+        z-index: -1;
+      }
+
+      .upload-section::after {
+        content: "";
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        background: linear-gradient(
+          135deg,
+          rgba(16, 185, 129, 0.1),
+          rgba(59, 130, 246, 0.05)
+        );
+        border-radius: 50%;
+        bottom: -200px;
+        left: -100px;
+        z-index: -1;
+      }
+
+      .upload-container {
+        display: flex;
+        gap: 80px;
+        align-items: flex-start;
+      }
+
+      .upload-content {
+        flex: 1;
+        max-width: 600px;
+      }
+
+      .page-subtitle {
+        color: var(--secondary);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .page-subtitle span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        background-color: var(--secondary);
+        color: white;
+        border-radius: 50%;
+      }
+
+      .page-title {
+        font-size: 3.5rem;
+        font-weight: 800;
+        line-height: 1.1;
+        margin-bottom: 32px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .page-description {
+        color: var(--gray-600);
+        font-size: 1.2rem;
+        line-height: 1.7;
+        margin-bottom: 40px;
+      }
+
+      .benefits-list {
+        margin-bottom: 40px;
+      }
+
+      .benefit-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        margin-bottom: 20px;
+      }
+
+      .benefit-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background-color: rgba(79, 70, 229, 0.1);
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+      }
+
+      .benefit-content h4 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: var(--gray-800);
+      }
+
+      .benefit-content p {
+        color: var(--gray-600);
+        font-size: 1rem;
+        line-height: 1.6;
+      }
+
+      .upload-access-wrapper {
+        position: relative;
+        flex: 1;
+        max-width: 600px;
+      }
+
+      .upload-form-container {
+        background-color: white;
+        border-radius: 24px;
+        padding: 40px;
+        box-shadow: var(--shadow-lg);
+        width: 100%; /* Ensure it takes full width of its parent */
+      }
+
+      .upload-form-header {
+        margin-bottom: 30px;
+        text-align: center;
+      }
+
+      .upload-form-header h3 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 16px;
+        color: var(--gray-900);
+      }
+
+      .upload-form-header p {
+        color: var(--gray-600);
+        font-size: 1.1rem;
+      }
+
+      .upload-form {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .form-group label {
+        font-weight: 600;
+        color: var(--gray-700);
+        font-size: 1.05rem;
+      }
+
+      .form-control {
+        padding: 14px 18px;
+        border-radius: 12px;
+        border: 2px solid var(--gray-200);
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        width: 100%;
+      }
+
+      .form-control:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+      }
+
+      .form-control::placeholder {
+        color: var(--gray-400);
+      }
+
+      .file-upload {
+        position: relative;
+        width: 100%;
+      }
+
+      .file-upload-wrapper {
+        border: 2px dashed var(--primary);
+        border-radius: 12px;
+        padding: 40px 20px;
+        text-align: center;
+        background-color: rgba(79, 70, 229, 0.05);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .file-upload-wrapper:hover {
+        background-color: rgba(79, 70, 229, 0.1);
+      }
+
+      .file-upload-icon {
+        font-size: 2.5rem;
+        color: var(--primary);
+        margin-bottom: 16px;
+      }
+
+      .file-upload-text h4 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: var(--gray-800);
+      }
+
+      .file-upload-text p {
+        color: var(--gray-600);
+        font-size: 0.95rem;
+        margin-bottom: 16px;
+      }
+
+      .file-types {
+        font-size: 0.9rem;
+        color: var(--gray-500);
+      }
+
+      .file-upload input[type="file"] {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        cursor: pointer;
+      }
+
+      .cv-preview {
+        display: none;
+        background-color: var(--gray-100);
+        border-radius: 12px;
+        padding: 16px;
+        margin-top: 20px;
+      }
+
+      .cv-preview.active {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .cv-preview-left {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .cv-preview-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 8px;
+        background-color: var(--primary);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+      }
+
+      .cv-preview-info h4 {
+        font-weight: 600;
+        color: var(--gray-800);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 250px; /* Adjust based on design needs */
+      }
+
+      .cv-preview-info p {
+        font-size: 0.9rem;
+        color: var(--gray-500);
+      }
+
+      .cv-preview-remove {
+        color: var(--gray-500);
+        cursor: pointer;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+      }
+
+      .cv-preview-remove:hover {
+        color: #ef4444;
+      }
+
+      .form-footer {
+        margin-top: 20px;
+      }
+
+      .form-footer button {
+        width: 100%;
+        padding: 16px;
+        font-size: 1.1rem;
+        font-weight: 600;
+      }
+
+      .privacy-notice {
+        text-align: center;
+        margin-top: 24px;
+        font-size: 0.9rem;
+        color: var(--gray-500);
+      }
+
+      .privacy-notice a {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .privacy-notice a:hover {
+        text-decoration: underline;
+      }
+
+      /* Locked Effect Styles */
+      .login-prompt-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(255, 255, 255, 0.95);
+        border-radius: 24px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 20px;
+        z-index: 10; /* Ensure it's above the form */
+        backdrop-filter: blur(5px); /* Optional: blur effect */
+        transition: opacity 0.3s ease;
+      }
+
+      .login-prompt-overlay.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .login-prompt-overlay .lock-icon {
+        font-size: 3rem;
+        color: var(--primary-dark);
+        margin-bottom: 20px;
+      }
+
+      .login-prompt-overlay h3 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--gray-900);
+        margin-bottom: 15px;
+      }
+
+      .login-prompt-overlay p {
+        color: var(--gray-600);
+        font-size: 1.1rem;
+        margin-bottom: 30px;
+        max-width: 400px;
+      }
+
+      .login-prompt-overlay .btn {
+        padding: 14px 28px;
+        font-size: 1.05rem;
+      }
+
+      /* Footer styles from index.html */
+      footer {
+        background-color: var(--gray-900);
+        color: var(--gray-400);
+        padding: 100px 0 40px;
+      }
+
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 60px;
+        margin-bottom: 60px;
+      }
+
+      .footer-logo {
+        color: white;
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .footer-logo-icon {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-light)
+        );
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 20px;
+      }
+
+      .footer-description {
+        font-size: 1.1rem;
+        line-height: 1.7;
+        margin-bottom: 30px;
+        opacity: 0.7;
+      }
+
+      .social-icons {
+        display: flex;
+        gap: 16px;
+      }
+
+      .social-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        font-size: 1.2rem;
+        color: white;
+        text-decoration: none;
+      }
+
+      .social-icon:hover {
+        background-color: var(--primary);
+        transform: translateY(-3px);
+      }
+
+      .footer-heading {
+        color: white;
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 30px;
+      }
+
+      .footer-links {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .footer-links a {
+        color: var(--gray-400);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-size: 1.05rem;
+      }
+
+      .footer-links a:hover {
+        color: white;
+        transform: translateX(5px);
+      }
+
+      .footer-bottom {
+        padding-top: 40px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .footer-bottom-links {
+        display: flex;
+        gap: 30px;
+      }
+
+      .footer-bottom-links a {
+        color: var(--gray-500);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-size: 0.95rem;
+      }
+
+      .footer-bottom-links a:hover {
+        color: white;
+      }
+      h1, h2, h3, h4 {
+        color: #0056b3; /* A nice blue color */
+        margin-top: 25px;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid #eee;
+    }
+    h1 { font-size: 24px; }
+    h2 { font-size: 20px; }
+    h3 { font-size: 18px; }
+    h4 { font-size: 16px; }
+
+    p {
+        margin-bottom: 10px;
+    }
+    ul {
+        list-style: none;
+        padding-left: 0;
+        margin-bottom: 15px;
+    }
+    ul li {
+        margin-bottom: 8px;
+        padding-left: 15px;
+        position: relative;
+    }
+    ul li::before {
+        content: "•";
+        color: #0056b3;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    strong {
+        font-weight: bold;
+    }
+    .section-content {
+        margin-left: 15px;
+    }
+    .contact-info p {
+        margin-bottom: 5px;
+    }
+    a {
+        color: #0056b3;
+        text-decoration: none;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+      /* Responsive styles */
+      /* Responsive Media Queries */
+      /* Large screens (1200px) - Already exists, keeping as is */
+      @media (max-width: 1200px) {
+        .upload-container {
+          flex-direction: column;
+          gap: 60px;
+        }
+        .upload-content,
+        .upload-access-wrapper {
+          max-width: 100%;
+        }
+      }
+      /* Medium screens (1050px) */
+      @media (max-width: 1050px) {
+        .nav-links {
+          gap: 20px;
+        }
+        .auth-buttons {
+          gap: 10px;
+        }
+        .btn {
+          padding: 10px 16px;
+          font-size: 0.95rem;
+        }
+        .page-title {
+          font-size: 3rem;
+        }
+        .upload-section {
+          padding-top: 130px;
+          padding-bottom: 80px;
+        }
+        .upload-form-header h3 {
+          font-size: 1.6rem;
+        }
+        .footer-grid {
+          grid-template-columns: 1fr 1fr 1fr;
+          gap: 40px;
+        }
+        .footer-grid > div:first-child {
+          grid-column: span 3;
+        }
+      }
+      /* Tablets (915px) */
+      @media (max-width: 915px) {
+        .nav-links {
+          gap: 12px;
+        }
+        .nav-links a {
+          font-size: 0.95rem;
+        }
+        .auth-buttons {
+          gap: 8px;
+        }
+        .btn {
+          padding: 8px 14px;
+          font-size: 0.9rem;
+        }
+        .logo {
+          font-size: 1.6rem;
+        }
+        .logo-icon {
+          width: 35px;
+          height: 35px;
+        }
+        .page-title {
+          font-size: 2.5rem;
+        }
+        .page-description {
+          font-size: 1.1rem;
+        }
+        .upload-form-container {
+          padding: 30px;
+        }
+        .benefit-item {
+          gap: 12px;
+        }
+        .benefit-icon {
+          width: 36px;
+          height: 36px;
+          font-size: 1.1rem;
+        }
+        .benefit-content h4 {
+          font-size: 1.1rem;
+        }
+        .footer-grid {
+          grid-template-columns: 1fr 1fr;
+          gap: 30px;
+        }
+        .footer-grid > div:first-child {
+          grid-column: span 2;
+        }
+      }
+      /* Smaller tablets (820px) */
+      @media (max-width: 820px) {
+        .nav {
+          flex-direction: column;
+          height: auto;
+          padding: 15px 0;
+          gap: 15px;
+        }
+        .logo {
+          align-self: flex-start;
+        }
+        .nav-links {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          width: 100%;
+          gap: 15px 10px;
+          padding: 10px 0;
+        }
+        .nav-links a {
+          text-align: center;
+        }
+        .auth-buttons {
+          width: 100%;
+          justify-content: center;
+        }
+        .user-menu {
+          /* Ensure user menu also responds */
+          flex-direction: column;
+          align-items: center;
+          width: 100%;
+          gap: 10px;
+        }
+        .upload-section {
+          padding-top: 300px; /* Adjusted for larger header on small screens */
+        }
+        .file-upload-text h4 {
+          font-size: 1.1rem;
+        }
+        .file-upload-text p {
+          font-size: 0.9rem;
+        }
+        .footer-bottom {
+          flex-direction: column;
+          gap: 20px;
+          text-align: center;
+        }
+        .footer-bottom-links {
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+      }
+      /* Standard tablets (768px) */
+      @media (max-width: 768px) {
+        .container {
+          padding: 0 20px;
+        }
+        .page-title {
+          font-size: 2.2rem;
+        }
+        .page-description,
+        .upload-form-header p {
+          font-size: 1rem;
+        }
+        .upload-form-header h3 {
+          font-size: 1.5rem;
+        }
+        .form-control {
+          padding: 12px 16px;
+        }
+        .file-upload-icon {
+          font-size: 2rem;
+        }
+        .footer-grid {
+          grid-template-columns: 1fr;
+          gap: 30px;
+        }
+        .footer-grid > div:first-child {
+          grid-column: span 1;
+        }
+        .footer-heading {
+          margin-bottom: 20px;
+        }
+        .footer-links {
+          align-items: center;
+        }
+      }
+      /* Mobile (576px) */
+      @media (max-width: 576px) {
+        .upload-section {
+          padding-top: 160px;
+          padding-bottom: 60px;
+        }
+        .page-subtitle {
+          font-size: 0.9rem;
+          margin-bottom: 16px;
+        }
+        .page-title {
+          font-size: 1.8rem;
+          margin-bottom: 24px;
+        }
+        .benefit-item {
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          gap: 12px;
+        }
+        .upload-form-container {
+          padding: 25px;
+        }
+        .upload-form {
+          gap: 18px;
+        }
+        .file-upload-wrapper {
+          padding: 30px 15px;
+        }
+        .cv-preview-left {
+          gap: 12px;
+        }
+        .cv-preview-icon {
+          width: 40px;
+          height: 40px;
+          font-size: 1.2rem;
+        }
+        .cv-preview-info h4 {
+          font-size: 0.95rem;
+          max-width: 180px;
+        }
+        .form-footer button {
+          padding: 14px;
+          font-size: 1rem;
+        }
+        .privacy-notice {
+          font-size: 0.85rem;
+        }
+      }
+      /* Small mobile (480px) */
+      @media (max-width: 480px) {
+        .nav-links {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .page-title {
+          font-size: 1.6rem;
+        }
+        .upload-form-header h3 {
+          font-size: 1.3rem;
+        }
+        .file-upload-text h4 {
+          font-size: 1rem;
+        }
+        .file-types {
+          font-size: 0.8rem;
+        }
+        .cv-preview-info h4 {
+          max-width: 150px;
+        }
+        .footer-logo {
+          font-size: 1.5rem;
+        }
+        .footer-description {
+          font-size: 1rem;
+        }
+        .footer-heading {
+          font-size: 1.2rem;
+        }
+        .footer-links a {
+          font-size: 1rem;
+        }
+      }
+      /* Very small mobile (375px) */
+      @media (max-width: 375px) {
+        .container {
+          padding: 0 15px;
+        }
+        .upload-form-container {
+          padding: 20px;
+        }
+        .file-upload-wrapper {
+          padding: 25px 10px;
+        }
+        .cv-preview-left {
+          gap: 8px;
+        }
+        .cv-preview-icon {
+          width: 36px;
+          height: 36px;
+        }
+        .cv-preview-info h4 {
+          font-size: 0.9rem;
+          max-width: 120px;
+        }
+        .footer-bottom-links {
+          flex-direction: column;
+          gap: 10px;
+        }
+      }
+      /* Basic styling for the results page */
+      body {
+        font-family: "Inter", sans-serif; /* Using Inter font as per instructions */
+        background-color: #f8f9fa;
+        color: #333;
+        line-height: 1.6;
+        padding-top: 80px; /* Space for fixed header */
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .section-title {
+        font-size: 2.2rem;
+        color: #1a202c;
+        margin-bottom: 20px;
+        text-align: center;
+        position: relative;
+        padding-bottom: 10px;
+      }
+      .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background-color: #4f46e5; /* Tailwind indigo-600 */
+        border-radius: 9999px;
+      }
+      .card {
+        background-color: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        margin-bottom: 30px;
+      }
+      .card-header {
+        border-bottom: 1px solid #e2e8f0;
+        padding-bottom: 15px;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .card-header h2 {
+        font-size: 1.8rem;
+        color: #2d3748;
+        margin: 0;
+      }
+      .card-body h3 {
+        font-size: 1.4rem;
+        color: #2d3748;
+        margin-top: 20px;
+        margin-bottom: 10px;
+      }
+      .card-body p,
+      .card-body ul {
+        font-size: 1rem;
+        color: #4a5568;
+      }
+      .job-list {
+        list-style: none;
+        padding: 0;
+      }
+      .job-item {
+        background-color: #edf2f7;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 15px;
+        border: 1px solid #e2e8f0;
+      }
+      .job-item h4 {
+        font-size: 1.2rem;
+        color: #4f46e5;
+        margin-top: 0;
+        margin-bottom: 5px;
+      }
+      .job-item p {
+        margin-bottom: 5px;
+      }
+      .job-score {
+        font-weight: bold;
+        color: #38a169; /* Green for score */
+      }
+      .job-fit {
+        font-style: italic;
+        color: #6b46c1; /* Purple for fit */
+      }
+      .no-results {
+        text-align: center;
+        color: #718096;
+        padding: 40px;
+        font-size: 1.1rem;
+      }
+      .btn-group {
+        display: flex;
+        gap: 15px;
+        margin-top: 30px;
+        justify-content: center;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 25px;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+        text-decoration: none;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .btn-primary {
+        background-color: var(--primary); /* Tailwind indigo-600 */
+        color: white;
+      }
+      .btn-primary:hover {
+        background-color: var(--primary-dark); /* Tailwind indigo-700 */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
+      .btn-outline {
+        background-color: white;
+        color: var(--primary);
+        border: 2px solid var(--primary);
+      }
+      .btn-outline:hover {
+        background-color: var(--primary-dark); /* Tailwind indigo-100 */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
+      .btn i {
+        margin-right: 8px;
+      }
+      .flashes {
+        list-style: none;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        font-weight: 500;
+      }
+      .flashes li {
+        margin-bottom: 10px;
+      }
+      .flashes .success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+      }
+      .flashes .error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
+      .flashes .warning {
+        background-color: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffeeba;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .btn-group {
+          flex-direction: column;
+        }
+        .btn {
+          width: 100%;
+        }
+        .card {
+          padding: 20px;
+        }
+        .section-title {
+          font-size: 1.8rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <nav class="nav">
+        <a href="/index" class="logo">
+          <div class="logo-icon">
+            <i class="fas fa-brain"></i>
+          </div>
+          CVisionary
+        </a>
+        <div class="nav-links">
+          <a href="/features">Features</a>
+          <a href="/howitworks">Workflow</a>
+          <a href="/pricing">Pricing</a>
+          <a href="/upload" class="active">Upload</a>
+          <a href="/about-us">About Us</a>
+        </div>
+        <div id="auth-section" class="auth-hidden">
+          <div id="auth-loading" class="auth-spinner-container">
+            <i class="fas fa-spinner fa-spin"></i>
+          </div>
+          <div class="auth-buttons hidden" id="auth-buttons-group">
+            <button class="btn btn-outline" id="login-button">Log In</button>
+            <button class="btn btn-primary" id="get-started-button">
+              Get Started
+            </button>
+          </div>
+          <div class="user-menu hidden" id="user-menu-group">
+            <div class="user-info" id="user-profile-link">
+              <div class="user-avatar" id="header-avatar">
+                <i class="fas fa-user"></i>
+              </div>
+              <div>
+                <div style="font-weight: 600" id="header-name">Loading...</div>
+                <div
+                  style="font-size: 0.875rem; color: var(--gray-500)"
+                  id="header-email"
+                >
+                  Loading...
+                </div>
+              </div>
+            </div>
+            <button class="logout-btn" id="logout-btn">
+              <i class="fas fa-sign-out-alt"></i>
+              Logout
+            </button>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main class="container">
+        
+      <h1 class="section-title">Your CV Analysis Results</h1>
+      <div class="btn-group">
+        <a href="/download_parsed_resume_pdf" class="btn btn-primary">
+          <i class="fas fa-file-pdf"></i> Download Parsed Resume (PDF)
+        </a>
+        <a href="/download_recommended_jobs_json" class="btn btn-primary">
+          <i class="fas fa-file-code"></i> Download Recommended Jobs (JSON)
+        </a>
+        <a href="/upload" class="btn btn-outline">
+          <i class="fas fa-arrow-left"></i> Upload New Resume
+        </a>
+      </div>
+      <h1>{{ resume_data.get('Full Name', 'N/A') }}</h1>
+
+    <div class="contact-info">
+        <p>Email: {{ resume_data.get('Email Address', 'N/A') }}</p>
+        <p>Phone: {{ resume_data.get('Phone Number', 'N/A') }}</p>
+        {% if resume_data.get('LinkedIn Profile URL') %}
+            <p>LinkedIn: <a href="{{ resume_data['LinkedIn Profile URL'] }}">{{ resume_data['LinkedIn Profile URL'] }}</a></p>
+        {% endif %}
+    </div>
+
+    {% if resume_data.get('Summary_or_Objective') %}
+        <h2>Summary/Objective</h2>
+        <div class="section-content">
+            <p>{{ resume_data['Summary_or_Objective'] }}</p>
+        </div>
+    {% endif %}
+
+    {% if resume_data.get('Education') %}
+        <h2>Education</h2>
+        <div class="section-content">
+            <ul>
+            {% for edu in resume_data['Education'] %}
+                <li>
+                    <strong>{{ edu.get('Degree', 'N/A') }}</strong> in {{ edu.get('Major', 'N/A') }}<br>
+                    {{ edu.get('University', 'N/A') }} ({{ edu.get('Years', 'N/A') }})
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    {% if resume_data.get('Work Experience') %}
+        <h2>Work Experience</h2>
+        <div class="section-content">
+            <ul>
+            {% for exp in resume_data['Work Experience'] %}
+                <li>
+                    <strong>{{ exp.get('Position', 'N/A') }}</strong> at {{ exp.get('Company', 'N/A') }}<br>
+                    Duration: {{ exp.get('Duration', 'N/A') }}<br>
+                    Description: {{ exp.get('Description', 'N/A') | replace('\n', '<br>') | safe }}
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    {% if resume_data.get('Technical Skills') %}
+        <h2>Technical Skills</h2>
+        <div class="section-content">
+            <p>{{ resume_data['Technical Skills'] | join(', ') }}</p>
+        </div>
+    {% endif %}
+
+    {% if resume_data.get('Soft Skills') %}
+        <h2>Soft Skills</h2>
+        <div class="section-content">
+            <p>{{ resume_data['Soft Skills'] | join(', ') }}</p>
+        </div>
+    {% endif %}
+
+    {% if resume_data.get('Certifications') %}
+        <h2>Certifications</h2>
+        <div class="section-content">
+            <p>{{ resume_data['Certifications'] | join(', ') }}</p>
+        </div>
+    {% endif %}
+
+    {% if resume_data.get('Projects') %}
+        <h2>Projects</h2>
+        <div class="section-content">
+            <ul>
+            {% for project in resume_data['Projects'] %}
+                <li>
+                    <strong>{{ project.get('Name', 'N/A') }}</strong>
+                    {% if project.get('URL') %}(<a href="{{ project['URL'] }}">{{ project['URL'] }}</a>){% endif %}<br>
+                    Technologies: {{ project.get('Technologies', []) | join(', ') }}<br>
+                    Description: {{ project.get('Description', 'N/A') | replace('\n', '<br>') | safe }}
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+      <div class="card">
+        <div class="card-header">
+          <h2>Resume Summary</h2>
+        </div>
+        <div class="card-body">
+          {% if resume_summary %}
+          <p>{{ resume_summary }}</p>
+          {% else %}
+          <p class="no-results">No summary available.</p>
+          {% endif %}
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h2>AI-Powered Job Recommendations</h2>
+        </div>
+        <div class="card-body">
+          {% if llm_recommended_jobs %}
+          <ul class="job-list">
+            {% for job in llm_recommended_jobs %}
+            <li class="job-item">
+              <h4>{{ job.job_title }}</h4>
+              <p>
+                <strong>Match Score:</strong>
+                <span class="job-score">{{ job.match_score }}%</span>
+              </p>
+              <p>
+                <strong>Suitability:</strong>
+                <span class="job-fit">{{ job.suitability_reasoning }}</span>
+              </p>
+              <p>
+                <strong>Suggestions for Improvement:</strong>
+                {{ job.improvement_suggestions }}
+              </p>
+              {% if job.url %}
+              <p>
+                <a
+                  href="{{ job.url }}"
+                  target="_blank"
+                  class="btn btn-outline btn-sm"
+                  >View Job</a
+                >
+              </p>
+              {% endif %}
+            </li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p class="no-results">No job recommendations available.</p>
+          {% endif %}
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h2>Traditional Job Matches (Scraped Data)</h2>
+        </div>
+        <div class="card-body">
+          {% if scraped_matched_jobs %}
+          <ul class="job-list">
+            {% for job in scraped_matched_jobs[:3] %}
+            <li class="job-item">
+              <h4>
+                {{ job.job_title }} at {{ job.company or 'N/A' }} ({{
+                job.location or 'N/A' }})
+              </h4>
+              <p>
+                <strong>Experience Level:</strong> {{ job.experience_level or
+                'N/A' }}
+              </p>
+              <p>
+                <strong>Match Score:</strong>
+                <span class="job-score"
+                  >{{ job.match_details.match_score }}%</span
+                >
+                (<span class="job-fit">{{ job.match_details.job_fit }}</span>)
+              </p>
+              <p>
+                <strong>Reasoning:</strong> {{ job.match_details.match_reasoning
+                }}
+              </p>
+              <p>
+                <strong>Matched Skills:</strong> {{
+                job.match_details.matched_skills | join(', ') or 'None' }}
+              </p>
+              <p>
+                <strong>Missing Skills:</strong> {{
+                job.match_details.missing_skills | join(', ') or 'None' }}
+              </p>
+              {% if job.url %}
+              <p>
+                <a
+                  href="{{ job.url }}"
+                  target="_blank"
+                  class="btn btn-outline btn-sm"
+                  >View Job</a
+                >
+              </p>
+              {% endif %}
+            </li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p class="no-results">
+            No traditional job matches found from scraped data. This could be
+            due to no job listings matching your profile or no job listings
+            being scraped recently.
+          </p>
+          {% endif %}
+        </div>
+      </div>
+    </main>
+    <footer>
+      <div class="container footer-grid">
+        <div class="col-span-2">
+          <a href="/index" class="footer-logo">
+            <div class="footer-logo-icon">
+              <i class="fas fa-brain"></i>
+            </div>
+            CVisionary
+          </a>
+          <p class="footer-description">
+            Revolutionizing your job search with AI-powered resume analysis and
+            personalized job recommendations.
+          </p>
+          <div class="social-icons">
+            <a href="#" class="social-icon"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-icon"
+              ><i class="fab fa-linkedin-in"></i
+            ></a>
+            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="footer-heading">Product</h3>
+          <ul class="footer-links">
+            <li><a href="/features">Features</a></li>
+            <li><a href="/pricing">Pricing</a></li>
+            <li><a href="/upload">Upload CV</a></li>
+            <li><a href="/results">Results</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="footer-heading">Company</h3>
+          <ul class="footer-links">
+            <li><a href="/about-us">About Us</a></li>
+            <li><a href="/howitworks">How It Works</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/careers">Careers</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="footer-heading">Legal</h3>
+          <ul class="footer-links">
+            <li><a href="/privacy-policy">Privacy Policy</a></li>
+            <li><a href="/terms-of-service">Terms of Service</a></li>
+            <li><a href="/cookie-policy">Cookie Policy</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="container footer-bottom">
+        <p>&copy; 2024 CVisionary. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="/privacy-policy">Privacy Policy</a>
+          <a href="/terms-of-service">Terms of Service</a>
+          <a href="/sitemap">Sitemap</a>
+        </div>
+      </div>
+    </footer>
+    <script type="module">
+      // Import Firebase modules
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+      import {
+        getAuth,
+        onAuthStateChanged,
+        signOut,
+      } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+      import {
+        getFirestore,
+        doc,
+        getDoc,
+        setDoc, // Import setDoc for creating initial user doc
+        updateDoc, // Import updateDoc for updating user data
+      } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+      // Firebase configuration (using the one from activity2.html)
+      const firebaseConfig = {
+        apiKey: "AIzaSyCyw-l5jQMZS77ZUcgLEY3GnbJmZyFZ_mY",
+        authDomain: "authenticate1-ec031.firebaseapp.com",
+        projectId: "authenticate1-ec031",
+        storageBucket: "authenticate1-ec031.firebasestorage.app",
+        messagingSenderId: "259315058735",
+        appId: "1:259315058735:web:cc77ae09101c38f26e1eda",
+        measurementId: "G-2GVD4YQWEP",
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth();
+      const db = getFirestore();
+
+      // Global variable to store user data
+      let currentUserData = null;
+
+      // Utility Functions
+      function getInitials(name) {
+        if (!name) return "U";
+        return name
+          .split(" ")
+          .map((word) => word.charAt(0))
+          .join("")
+          .toUpperCase()
+          .slice(0, 2);
+      }
+
+      // Function to load user profile from Firestore
+      async function loadUserProfile(user) {
+        console.log("loadUserProfile: User object received:", user);
+        try {
+          const userDocRef = doc(db, "users", user.uid);
+          const userDocSnap = await getDoc(userDocRef);
+
+          if (userDocSnap.exists()) {
+            currentUserData = userDocSnap.data();
+            console.log(
+              "loadUserProfile: User data from Firestore:",
+              currentUserData
+            );
+          } else {
+            // If user document doesn't exist, create a basic one
+            currentUserData = {
+              name: user.displayName || "User",
+              email: user.email,
+              role: "user",
+              createdAt: new Date(),
+              lastLogin: new Date(),
+              loginCount: 1,
+            };
+            await setDoc(userDocRef, currentUserData); // Use setDoc for initial creation
+            console.log(
+              "loadUserProfile: Created new user document:",
+              currentUserData
+            );
+          }
+          // Update last login (can also increment login count here if desired)
+          await updateDoc(userDocRef, {
+            lastLogin: new Date(),
+            loginCount: (currentUserData.loginCount || 0) + 1,
+          });
+          console.log(
+            "loadUserProfile: User data updated with lastLogin/loginCount."
+          );
+
+          updateHeaderUI(); // Update the header after fetching/updating data
+        } catch (error) {
+          console.error("Error loading user profile:", error);
+          // Handle error, maybe show a generic "User" name
+          document.getElementById("header-name").textContent = "User";
+          document.getElementById("header-email").textContent = "Error";
+          document.getElementById("header-avatar").textContent = "U";
+        }
+      }
+
+      // Function to update the header UI based on user data
+      function updateHeaderUI() {
+        console.log("updateHeaderUI: Current User Data:", currentUserData);
+        const authSection = document.getElementById("auth-section");
+        const authLoading = document.getElementById("auth-loading"); // Get the loading spinner
+        const userMenu = document.getElementById("user-menu-group");
+        const authButtons = document.getElementById("auth-buttons-group");
+
+        // Hide the loading spinner first
+        authLoading.classList.add("hidden");
+
+        if (currentUserData) {
+          const initials = getInitials(
+            currentUserData.name || currentUserData.email
+          );
+          document.getElementById("header-avatar").textContent = initials;
+          document.getElementById("header-name").textContent =
+            currentUserData.name || "User";
+          document.getElementById("header-email").textContent =
+            currentUserData.email;
+
+          // Show user menu, hide auth buttons
+          userMenu.classList.remove("hidden");
+          authButtons.classList.add("hidden");
+          console.log(
+            "updateHeaderUI: Showing user menu, hiding auth buttons."
+          );
+        } else {
+          // Hide user menu, show auth buttons
+          userMenu.classList.add("hidden");
+          authButtons.classList.remove("hidden");
+          console.log(
+            "updateHeaderUI: Hiding user menu, showing auth buttons."
+          );
+        }
+        // Finally, make the entire auth section visible
+        authSection.classList.add("auth-visible");
+        authSection.classList.remove("auth-hidden");
+        console.log("updateHeaderUI: Auth section made visible.");
+      }
+
+      // Logout Function
+      async function logout() {
+        try {
+          await signOut(auth);
+          currentUserData = null; // Clear local user data
+          updateHeaderUI(); // Update UI to show login/signup buttons
+          console.log("User logged out successfully.");
+          // Optionally redirect to login page after logout
+          // window.location.href = "login-signup.html";
+        } catch (error) {
+          console.error("Error logging out:", error);
+          // You might want to display a non-alert message to the user here
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // Initial state: show spinner, hide buttons and user menu
+        document.getElementById("auth-loading").classList.remove("hidden");
+        document.getElementById("auth-buttons-group").classList.add("hidden");
+        document.getElementById("user-menu-group").classList.add("hidden");
+
+        // Add scroll animation for header
+        window.addEventListener("scroll", function () {
+          const header = document.querySelector(".header");
+          if (window.scrollY > 10) {
+            header.style.boxShadow = "var(--shadow)";
+            header.style.background = "rgba(255, 255, 255, 0.98)";
+          } else {
+            header.style.boxShadow = "var(--shadow-sm)";
+            header.style.background = "white";
+          }
+        });
+
+        // Get the buttons and user profile link from the main page
+        const loginButton = document.getElementById("login-button");
+        const getStartedButton = document.getElementById("get-started-button");
+        const logoutButton = document.getElementById("logout-btn");
+        const userProfileLink = document.getElementById("user-profile-link");
+
+        if (loginButton) {
+          loginButton.addEventListener("click", function () {
+            window.location.href = "/login-signup";
+          });
+        }
+
+        if (getStartedButton) {
+          getStartedButton.addEventListener("click", function () {
+            window.location.href = "/login-signup?tab=signup";
+          });
+        }
+
+        if (logoutButton) {
+          logoutButton.addEventListener("click", logout);
+        }
+
+        // Add click listener to the user profile section
+        if (userProfileLink) {
+          userProfileLink.addEventListener("click", function () {
+            window.location.href = "/activity2"; // Navigate to the activity page
+          });
+        }
+
+        // Authentication State Observer
+        onAuthStateChanged(auth, async (user) => {
+          console.log(
+            "onAuthStateChanged: Authentication state changed. User:",
+            user
+          );
+          if (user) {
+            // User is signed in
+            await loadUserProfile(user); // Load profile and update UI
+          } else {
+            // User is signed out
+            currentUserData = null; // Clear user data
+            updateHeaderUI(); // Update UI to show login/signup buttons
+          }
+        });
+
+        // Toggle billing period (monthly/annual)
+        const billingToggle = document.getElementById("billing-toggle");
+        const starterPrice = document.getElementById("starter-price");
+        const proPrice = document.getElementById("pro-price");
+        const businessPrice = document.getElementById("business-price");
+        const toggleOptions = document.querySelectorAll(".toggle-option");
+
+        billingToggle.addEventListener("change", function () {
+          if (this.checked) {
+            // Annual pricing (20% discount)
+            starterPrice.textContent = "--";
+            proPrice.textContent = "--";
+            businessPrice.textContent = "--";
+            toggleOptions[0].classList.remove("active");
+            toggleOptions[1].classList.add("active");
+          } else {
+            // Monthly pricing
+            starterPrice.textContent = "--";
+            proPrice.textContent = "--";
+            businessPrice.textContent = "--";
+            toggleOptions[0].classList.add("active");
+            toggleOptions[1].classList.remove("active");
+          }
+        });
+
+        // FAQ toggle
+        const faqQuestions = document.querySelectorAll(".faq-question");
+
+        faqQuestions.forEach((question) => {
+          question.addEventListener("click", () => {
+            const answer = question.nextElementSibling;
+            const toggle = question.querySelector(".faq-toggle");
+
+            if (
+              answer.style.display === "none" ||
+              answer.style.display === ""
+            ) {
+              answer.style.display = "block";
+              toggle.classList.add("open");
+            } else {
+              answer.style.display = "none";
+              toggle.classList.remove("open");
+            }
+          });
+        });
+
+        // Set active navigation link for 'Pricing' page
+        const currentPath = window.location.pathname.split("/").pop();
+        const navLinks = document.querySelectorAll(".nav-links a");
+        navLinks.forEach((link) => {
+          if (
+            link.getAttribute("href") &&
+            link.getAttribute("href").endsWith(currentPath)
+          ) {
+            link.classList.add("active");
+          } else {
+            link.classList.remove("active");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

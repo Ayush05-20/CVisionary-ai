@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parsed Resume - {{ resume_data.get('Full Name', 'CV') }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            color: #333;
+            line-height: 1.6;
+        }
+        h1, h2, h3, h4 {
+            color: #0056b3; /* A nice blue color */
+            margin-top: 25px;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #eee;
+        }
+        h1 { font-size: 24px; }
+        h2 { font-size: 20px; }
+        h3 { font-size: 18px; }
+        h4 { font-size: 16px; }
+
+        p {
+            margin-bottom: 10px;
+        }
+        ul {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 15px;
+        }
+        ul li {
+            margin-bottom: 8px;
+            padding-left: 15px;
+            position: relative;
+        }
+        ul li::before {
+            content: "•";
+            color: #0056b3;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        strong {
+            font-weight: bold;
+        }
+        .section-content {
+            margin-left: 15px;
+        }
+        .contact-info p {
+            margin-bottom: 5px;
+        }
+        a {
+            color: #0056b3;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ resume_data.get('Full Name', 'N/A') }}</h1>
+
+    <div class="contact-info">
+        <p>Email: {{ resume_data.get('Email Address', 'N/A') }}</p>
+        <p>Phone: {{ resume_data.get('Phone Number', 'N/A') }}</p>
+        {% if resume_data.get('LinkedIn Profile URL') %}
+            <p>LinkedIn: <a href="{{ resume_data['LinkedIn Profile URL'] }}">{{ resume_data['LinkedIn Profile URL'] }}</a></p>
+        {% endif %}
+    </div>
+
+    {% if resume_data.get('Summary_or_Objective') %}
+        <h2>Summary/Objective</h2>
+        <div class="section-content">
+            <p>{{ resume_data['Summary_or_Objective'] }}</p>
+        </div>
+    {% endif %}
+
+    {% if resume_data.get('Education') %}
+        <h2>Education</h2>
+        <div class="section-content">
+            <ul>
+            {% for edu in resume_data['Education'] %}
+                <li>
+                    <strong>{{ edu.get('Degree', 'N/A') }}</strong> in {{ edu.get('Major', 'N/A') }}<br>
+                    {{ edu.get('University', 'N/A') }} ({{ edu.get('Years', 'N/A') }})
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    {% if resume_data.get('Work Experience') %}
+        <h2>Work Experience</h2>
+        <div class="section-content">
+            <ul>
+            {% for exp in resume_data['Work Experience'] %}
+                <li>
+                    <strong>{{ exp.get('Position', 'N/A') }}</strong> at {{ exp.get('Company', 'N/A') }}<br>
+                    Duration: {{ exp.get('Duration', 'N/A') }}<br>
+                    Description: {{ exp.get('Description', 'N/A') | replace('\n', '<br>') | safe }}
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    {% if resume_data.get('Technical Skills') %}
+        <h2>Technical Skills</h2>
+        <div class="section-content">
+            <p>{{ resume_data['Technical Skills'] | join(', ') }}</p>
+        </div>
+    {% endif %}
+
+    {% if resume_data.get('Soft Skills') %}
+        <h2>Soft Skills</h2>
+        <div class="section-content">
+            <p>{{ resume_data['Soft Skills'] | join(', ') }}</p>
+        </div>
+    {% endif %}
+
+    {% if resume_data.get('Certifications') %}
+        <h2>Certifications</h2>
+        <div class="section-content">
+            <p>{{ resume_data['Certifications'] | join(', ') }}</p>
+        </div>
+    {% endif %}
+
+    {% if resume_data.get('Projects') %}
+        <h2>Projects</h2>
+        <div class="section-content">
+            <ul>
+            {% for project in resume_data['Projects'] %}
+                <li>
+                    <strong>{{ project.get('Name', 'N/A') }}</strong>
+                    {% if project.get('URL') %}(<a href="{{ project['URL'] }}">{{ project['URL'] }}</a>){% endif %}<br>
+                    Technologies: {{ project.get('Technologies', []) | join(', ') }}<br>
+                    Description: {{ project.get('Description', 'N/A') | replace('\n', '<br>') | safe }}
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+</body>
+</html>

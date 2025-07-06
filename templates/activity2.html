@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile Management - CVisionary</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../static/css/activity.css" />
+  </head>
+  <body>
+    <!-- Loading State -->
+    <div id="auth-loading" class="auth-loading">
+      <div
+        class="spinner"
+        style="width: 40px; height: 40px; border-width: 4px"
+      ></div>
+      <p>Loading your profile...</p>
+    </div>
+
+    <!-- Authentication Error -->
+    <div id="auth-error" class="auth-error" style="display: none">
+      <i
+        class="fas fa-exclamation-triangle"
+        style="font-size: 3rem; margin-bottom: 20px"
+      ></i>
+      <h2>Authentication Required</h2>
+      <p>Please log in to access your profile.</p>
+      <button
+        class="btn btn-primary"
+        onclick="window.location.href='/login-signup'"
+        style="margin-top: 20px"
+      >
+        <i class="fas fa-sign-in-alt"></i>
+        Go to Login
+      </button>
+    </div>
+
+    <!-- Main Application -->
+    <div id="main-app" class="auth-required">
+      <!-- Header -->
+      <header class="header">
+        <nav class="nav">
+          <a href="/index" class="logo">
+            <div class="logo-icon">
+              <i class="fas fa-eye"></i>
+            </div>
+            CVisionary
+          </a>
+
+          <div class="nav-links">
+            <a href="/features">Features</a>
+            <a href="/howitworks">Workflow</a>
+            <a href="/pricing">Pricing</a>
+            <a href="/upload">Upload</a>
+            <a href="/about-us">About Us</a>
+          </div>
+
+          <div class="user-menu">
+            <div class="user-info">
+              <div class="user-avatar" id="header-avatar">
+                <i class="fas fa-user"></i>
+              </div>
+              <div>
+                <div style="font-weight: 600" id="header-name">Loading...</div>
+                <div
+                  style="font-size: 0.875rem; color: var(--gray-500)"
+                  id="header-email"
+                >
+                  Loading...
+                </div>
+              </div>
+            </div>
+            <button class="logout-btn" id="logout-btn">
+              <i class="fas fa-sign-out-alt"></i>
+              Logout
+            </button>
+          </div>
+        </nav>
+      </header>
+
+      <!-- Main Container -->
+      <div class="container">
+        <h1 class="page-title">Profile Management</h1>
+        <p class="page-subtitle">
+          Manage your account settings and preferences
+        </p>
+
+        <!-- Alert Container -->
+        <div id="alert-container"></div>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+          <!-- Profile Card -->
+          <div class="profile-card">
+            <div class="profile-header">
+              <div class="profile-avatar-large" id="profile-avatar">
+                <i class="fas fa-user"></i>
+                <div class="status-badge"></div>
+              </div>
+              <h2 class="profile-name" id="profile-name">Loading...</h2>
+              <p class="profile-email" id="profile-email">Loading...</p>
+              <span class="profile-role" id="profile-role">user</span>
+            </div>
+
+            <div class="profile-stats">
+              <div class="stat-item">
+                <div class="stat-number" id="login-count">0</div>
+                <div class="stat-label">Total Logins</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number" id="profile-completion">0%</div>
+                <div class="stat-label">Profile Complete</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Main Content -->
+          <div class="main-content">
+            <!-- Profile Information -->
+            <div class="section-card">
+              <div class="section-header">
+                <h3 class="section-title">
+                  <i class="fas fa-user-edit"></i>
+                  Profile Information
+                </h3>
+              </div>
+
+              <form id="profile-form">
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label class="form-label" for="profile-name-input"
+                      >Full Name</label
+                    >
+                    <input
+                      type="text"
+                      id="profile-name-input"
+                      class="form-input"
+                      placeholder="Enter your full name"
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label" for="profile-email-input"
+                      >Email Address</label
+                    >
+                    <input
+                      type="email"
+                      id="profile-email-input"
+                      class="form-input"
+                      disabled
+                    />
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  id="update-profile-btn"
+                >
+                  <i class="fas fa-save"></i>
+                  Update Profile
+                </button>
+              </form>
+            </div>
+
+            <!-- Password Change -->
+            <div class="section-card">
+              <div class="section-header">
+                <h3 class="section-title">
+                  <i class="fas fa-lock"></i>
+                  Change Password
+                </h3>
+              </div>
+
+              <form id="password-form">
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label class="form-label" for="current-password"
+                      >Current Password</label
+                    >
+                    <input
+                      type="password"
+                      id="current-password"
+                      class="form-input"
+                      placeholder="Enter current password"
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label" for="new-password"
+                      >New Password</label
+                    >
+                    <input
+                      type="password"
+                      id="new-password"
+                      class="form-input"
+                      placeholder="Enter new password"
+                    />
+                    <div
+                      class="password-strength"
+                      id="password-strength"
+                      style="display: none"
+                    >
+                      <div class="strength-bar">
+                        <div class="strength-fill" id="strength-fill"></div>
+                      </div>
+                      <div class="strength-text" id="strength-text"></div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label" for="confirm-password"
+                      >Confirm New Password</label
+                    >
+                    <input
+                      type="password"
+                      id="confirm-password"
+                      class="form-input"
+                      placeholder="Confirm new password"
+                    />
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  id="change-password-btn"
+                >
+                  <i class="fas fa-key"></i>
+                  Change Password
+                </button>
+              </form>
+            </div>
+
+            <!-- Account Actions -->
+            <div class="section-card">
+              <div class="section-header">
+                <h3 class="section-title">
+                  <i class="fas fa-cog"></i>
+                  Account Actions
+                </h3>
+              </div>
+
+              <div style="display: flex; gap: 15px; flex-wrap: wrap">
+                <button class="btn btn-secondary" id="reset-password-btn">
+                  <i class="fas fa-envelope"></i>
+                  Send Password Reset Email
+                </button>
+
+                <button class="btn btn-secondary" id="refresh-profile-btn">
+                  <i class="fas fa-sync-alt"></i>
+                  Refresh Profile Data
+                </button>
+
+                <button class="btn btn-danger" id="sign-out-btn">
+                  <i class="fas fa-sign-out-alt"></i>
+                  Sign Out
+                </button>
+              </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="section-card">
+              <div class="section-header">
+                <h3 class="section-title">
+                  <i class="fas fa-history"></i>
+                  Recent Activity
+                </h3>
+              </div>
+
+              <div id="activity-log">
+                <div class="activity-item">
+                  <div class="activity-icon">
+                    <i class="fas fa-sign-in-alt"></i>
+                  </div>
+                  <div class="activity-content">
+                    <div class="activity-title">Last Login</div>
+                    <div class="activity-time" id="last-login-time">
+                      Loading...
+                    </div>
+                  </div>
+                </div>
+                <div class="activity-item">
+                  <div class="activity-icon">
+                    <i class="fas fa-user-plus"></i>
+                  </div>
+                  <div class="activity-content">
+                    <div class="activity-title">Account Created</div>
+                    <div class="activity-time" id="account-created-time">
+                      Loading...
+                    </div>
+                  </div>
+                </div>
+                <div class="activity-item">
+                  <div class="activity-icon">
+                    <i class="fas fa-edit"></i>
+                  </div>
+                  <div class="activity-content">
+                    <div class="activity-title">Profile Last Updated</div>
+                    <div class="activity-time" id="profile-updated-time">
+                      Loading...
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Firebase and Authentication Scripts -->
+    <script type="module">
+      // Import Firebase modules
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+      import {
+        getAuth,
+        onAuthStateChanged,
+        updatePassword,
+        reauthenticateWithCredential,
+        EmailAuthProvider,
+        sendPasswordResetEmail,
+        signOut,
+      } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+      import {
+        getFirestore,
+        doc,
+        getDoc,
+        updateDoc,
+        serverTimestamp,
+      } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+      // Firebase configuration (same as login page)
+      const firebaseConfig = {
+        apiKey: "AIzaSyCyw-l5jQMZS77ZUcgLEY3GnbJmZyFZ_mY",
+        authDomain: "authenticate1-ec031.firebaseapp.com",
+        projectId: "authenticate1-ec031",
+        storageBucket: "authenticate1-ec031.firebasestorage.app",
+        messagingSenderId: "259315058735",
+        appId: "1:259315058735:web:cc77ae09101c38f26e1eda",
+        measurementId: "G-2GVD4YQWEP",
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth();
+      const db = getFirestore();
+
+      // Global variables
+      let currentUser = null;
+      let userData = null;
+
+      // Utility Functions
+      function showAlert(message, type) {
+        const alertContainer = document.getElementById("alert-container");
+        const alertDiv = document.createElement("div");
+        alertDiv.className = `alert alert-${type}`;
+
+        const iconClass =
+          type === "success"
+            ? "fa-check-circle"
+            : type === "error"
+            ? "fa-exclamation-circle"
+            : "fa-info-circle";
+        alertDiv.innerHTML = `<i class="fas ${iconClass}"></i> ${message}`;
+
+        alertContainer.innerHTML = "";
+        alertContainer.appendChild(alertDiv);
+
+        setTimeout(() => {
+          alertDiv.style.opacity = "0";
+          alertDiv.style.transition = "opacity 0.5s";
+          setTimeout(() => {
+            if (alertContainer.contains(alertDiv)) {
+              alertContainer.removeChild(alertDiv);
+            }
+          }, 500);
+        }, 5000);
+      }
+
+      function formatDate(timestamp) {
+        if (!timestamp) return "Never";
+
+        let date;
+        if (timestamp.seconds) {
+          date = new Date(timestamp.seconds * 1000);
+        } else if (timestamp.toDate) {
+          date = timestamp.toDate();
+        } else {
+          date = new Date(timestamp);
+        }
+
+        return date.toLocaleDateString() + " at " + date.toLocaleTimeString();
+      }
+
+      function getInitials(name) {
+        if (!name) return "U";
+        return name
+          .split(" ")
+          .map((word) => word.charAt(0))
+          .join("")
+          .toUpperCase()
+          .slice(0, 2);
+      }
+
+      function calculateProfileCompletion(userData) {
+        const fields = ["name", "email"];
+        const completedFields = fields.filter(
+          (field) => userData[field] && userData[field].trim() !== ""
+        );
+        return Math.round((completedFields.length / fields.length) * 100);
+      }
+
+      // Password strength checker
+      function checkPasswordStrength(password) {
+        if (!password) return { strength: 0, text: "" };
+
+        let strength = 0;
+        let text = "";
+
+        if (password.length >= 8) strength++;
+        if (/[A-Z]/.test(password)) strength++;
+        if (/[a-z]/.test(password)) strength++;
+        if (/[0-9]/.test(password)) strength++;
+        if (/[^A-Za-z0-9]/.test(password)) strength++;
+
+        switch (strength) {
+          case 0:
+          case 1:
+            text = "Very Weak";
+            break;
+          case 2:
+            text = "Weak";
+            break;
+          case 3:
+            text = "Fair";
+            break;
+          case 4:
+            text = "Good";
+            break;
+          case 5:
+            text = "Strong";
+            break;
+        }
+
+        return { strength, text };
+      }
+
+      // Authentication Functions
+      async function loadUserProfile() {
+        if (!currentUser) return;
+
+        try {
+          const userDoc = await getDoc(doc(db, "users", currentUser.uid));
+
+          if (userDoc.exists()) {
+            userData = userDoc.data();
+          } else {
+            // Create initial user document if it doesn't exist
+            userData = {
+              name: currentUser.displayName || "",
+              email: currentUser.email,
+              role: "user",
+              createdAt: serverTimestamp(),
+              lastLogin: serverTimestamp(),
+              loginCount: 1,
+            };
+
+            await updateDoc(doc(db, "users", currentUser.uid), userData);
+          }
+
+          // Update login count and last login
+          await updateDoc(doc(db, "users", currentUser.uid), {
+            lastLogin: serverTimestamp(),
+            loginCount: (userData.loginCount || 0) + 1,
+          });
+
+          updateUIWithUserData();
+        } catch (error) {
+          console.error("Error loading user profile:", error);
+          showAlert("Error loading profile data", "error");
+        }
+      }
+
+      function updateUIWithUserData() {
+        // Update header
+        const initials = getInitials(userData.name || userData.email);
+        document.getElementById("header-avatar").innerHTML = initials;
+        document.getElementById("header-name").textContent =
+          userData.name || "User";
+        document.getElementById("header-email").textContent = userData.email;
+
+        // Update profile card
+        document.getElementById("profile-avatar").innerHTML = initials;
+        document.getElementById("profile-name").textContent =
+          userData.name || "User";
+        document.getElementById("profile-email").textContent = userData.email;
+        document.getElementById("profile-role").textContent =
+          userData.role || "user";
+
+        // Update stats
+        document.getElementById("login-count").textContent =
+          userData.loginCount || 0;
+        document.getElementById("profile-completion").textContent =
+          calculateProfileCompletion(userData) + "%";
+
+        // Update form fields
+        document.getElementById("profile-name-input").value =
+          userData.name || "";
+        document.getElementById("profile-email-input").value = userData.email;
+
+        // Update activity log
+        document.getElementById("last-login-time").textContent = formatDate(
+          userData.lastLogin
+        );
+        document.getElementById("account-created-time").textContent =
+          formatDate(userData.createdAt);
+        document.getElementById("profile-updated-time").textContent =
+          formatDate(userData.updatedAt || userData.createdAt);
+      }
+
+      // Profile Update Function
+      async function updateProfile(formData) {
+        if (!currentUser) return false;
+
+        try {
+          const updateButton = document.getElementById("update-profile-btn");
+          updateButton.disabled = true;
+          updateButton.innerHTML = '<div class="spinner"></div> Updating...';
+
+          await updateDoc(doc(db, "users", currentUser.uid), {
+            ...formData,
+            updatedAt: serverTimestamp(),
+          });
+
+          // Update local userData
+          Object.assign(userData, formData);
+          updateUIWithUserData();
+
+          showAlert("Profile updated successfully!", "success");
+          return true;
+        } catch (error) {
+          console.error("Error updating profile:", error);
+          showAlert("Error updating profile: " + error.message, "error");
+          return false;
+        } finally {
+          const updateButton = document.getElementById("update-profile-btn");
+          updateButton.disabled = false;
+          updateButton.innerHTML = '<i class="fas fa-save"></i> Update Profile';
+        }
+      }
+
+      // Password Change Function
+      async function changePassword(currentPassword, newPassword) {
+        if (!currentUser) return false;
+
+        try {
+          const changeButton = document.getElementById("change-password-btn");
+          changeButton.disabled = true;
+          changeButton.innerHTML = '<div class="spinner"></div> Changing...';
+
+          // Re-authenticate user
+          const credential = EmailAuthProvider.credential(
+            currentUser.email,
+            currentPassword
+          );
+          await reauthenticateWithCredential(currentUser, credential);
+
+          // Update password in Firebase Authentication
+          await updatePassword(currentUser, newPassword);
+
+          // Update Firestore with the new password (NOT RECOMMENDED IN PRODUCTION)
+          await updateDoc(doc(db, "users", currentUser.uid), {
+            password: newPassword, // Storing plaintext password (for demo only)
+            passwordUpdatedAt: serverTimestamp(),
+            updatedAt: serverTimestamp(),
+          });
+
+          showAlert(
+            "Password changed successfully! Please use your new password for future logins.",
+            "success"
+          );
+
+          // Clear form
+          document.getElementById("password-form").reset();
+          document.getElementById("password-strength").style.display = "none";
+
+          return true;
+        } catch (error) {
+          console.error("Error changing password:", error);
+          let errorMessage = "Error changing password";
+
+          if (error.code === "auth/wrong-password") {
+            errorMessage = "Current password is incorrect";
+          } else if (error.code === "auth/weak-password") {
+            errorMessage = "New password is too weak (minimum 6 characters)";
+          } else if (error.code === "auth/requires-recent-login") {
+            errorMessage =
+              "Please log out and log back in to change your password";
+          }
+
+          showAlert(errorMessage, "error");
+          return false;
+        } finally {
+          const changeButton = document.getElementById("change-password-btn");
+          changeButton.disabled = false;
+          changeButton.innerHTML = '<i class="fas fa-key"></i> Change Password';
+        }
+      }
+
+      // Send Password Reset Email
+      async function sendPasswordReset() {
+        if (!currentUser) return;
+
+        try {
+          const resetButton = document.getElementById("reset-password-btn");
+          resetButton.disabled = true;
+          resetButton.innerHTML = '<div class="spinner"></div> Sending...';
+
+          await sendPasswordResetEmail(auth, currentUser.email);
+          showAlert("Password reset email sent successfully!", "success");
+        } catch (error) {
+          console.error("Error sending password reset:", error);
+          showAlert("Error sending password reset email", "error");
+        } finally {
+          const resetButton = document.getElementById("reset-password-btn");
+          resetButton.disabled = false;
+          resetButton.innerHTML =
+            '<i class="fas fa-envelope"></i> Send Password Reset Email';
+        }
+      }
+
+      // Refresh Profile Data
+      async function refreshProfileData() {
+        try {
+          const refreshButton = document.getElementById("refresh-profile-btn");
+          refreshButton.disabled = true;
+          refreshButton.innerHTML = '<div class="spinner"></div> Refreshing...';
+
+          await loadUserProfile();
+          showAlert("Profile data refreshed successfully!", "success");
+        } catch (error) {
+          console.error("Error refreshing profile:", error);
+          showAlert("Error refreshing profile data", "error");
+        } finally {
+          const refreshButton = document.getElementById("refresh-profile-btn");
+          refreshButton.disabled = false;
+          refreshButton.innerHTML =
+            '<i class="fas fa-sync-alt"></i> Refresh Profile Data';
+        }
+      }
+
+      // Logout Function
+      async function logout() {
+        try {
+          await signOut(auth);
+          showAlert("Logged out successfully!", "success");
+          setTimeout(() => {
+            window.location.href = "/login-signup";
+          }, 1000);
+        } catch (error) {
+          console.error("Error logging out:", error);
+          showAlert("Error logging out", "error");
+        }
+      }
+
+      // Event Listeners
+      document.addEventListener("DOMContentLoaded", function () {
+        // Profile form submission
+        document
+          .getElementById("profile-form")
+          .addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const formData = {
+              name: document.getElementById("profile-name-input").value.trim(),
+            };
+
+            // Validation
+            if (!formData.name) {
+              showAlert("Please enter your full name", "error");
+              return;
+            }
+
+            await updateProfile(formData);
+          });
+
+        // Password form submission
+        document
+          .getElementById("password-form")
+          .addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const currentPassword =
+              document.getElementById("current-password").value;
+            const newPassword = document.getElementById("new-password").value;
+            const confirmPassword =
+              document.getElementById("confirm-password").value;
+
+            // Validation
+            if (!currentPassword) {
+              showAlert("Please enter your current password", "error");
+              return;
+            }
+
+            if (!newPassword) {
+              showAlert("Please enter a new password", "error");
+              return;
+            }
+
+            if (newPassword.length < 6) {
+              showAlert(
+                "New password must be at least 6 characters long",
+                "error"
+              );
+              return;
+            }
+
+            if (newPassword !== confirmPassword) {
+              showAlert("New passwords do not match", "error");
+              return;
+            }
+
+            if (currentPassword === newPassword) {
+              showAlert(
+                "New password must be different from current password",
+                "error"
+              );
+              return;
+            }
+
+            await changePassword(currentPassword, newPassword);
+          });
+
+        // Password strength indicator
+        document
+          .getElementById("new-password")
+          .addEventListener("input", function (e) {
+            const password = e.target.value;
+            const strengthIndicator =
+              document.getElementById("password-strength");
+            const strengthFill = document.getElementById("strength-fill");
+            const strengthText = document.getElementById("strength-text");
+
+            if (password.length === 0) {
+              strengthIndicator.style.display = "none";
+              return;
+            }
+
+            strengthIndicator.style.display = "block";
+            const { strength, text } = checkPasswordStrength(password);
+
+            // Update strength bar
+            strengthFill.className = "strength-fill";
+            if (strength <= 1) {
+              strengthFill.classList.add("strength-weak");
+            } else if (strength === 2) {
+              strengthFill.classList.add("strength-fair");
+            } else if (strength === 3 || strength === 4) {
+              strengthFill.classList.add("strength-good");
+            } else {
+              strengthFill.classList.add("strength-strong");
+            }
+
+            strengthText.textContent = text;
+            strengthText.style.color =
+              strength <= 1
+                ? "var(--error)"
+                : strength === 2
+                ? "var(--warning)"
+                : "var(--success)";
+          });
+
+        // Account action buttons
+        document
+          .getElementById("reset-password-btn")
+          .addEventListener("click", sendPasswordReset);
+        document
+          .getElementById("refresh-profile-btn")
+          .addEventListener("click", refreshProfileData);
+        document
+          .getElementById("sign-out-btn")
+          .addEventListener("click", logout);
+        document.getElementById("logout-btn").addEventListener("click", logout);
+      });
+
+      // Authentication State Observer
+      onAuthStateChanged(auth, async (user) => {
+        const authLoading = document.getElementById("auth-loading");
+        const authError = document.getElementById("auth-error");
+        const mainApp = document.getElementById("main-app");
+
+        if (user) {
+          currentUser = user;
+
+          try {
+            await loadUserProfile();
+
+            // Show main app
+            authLoading.style.display = "none";
+            authError.style.display = "none";
+            mainApp.classList.add("show");
+          } catch (error) {
+            console.error("Error loading user data:", error);
+            authLoading.style.display = "none";
+            authError.style.display = "block";
+            authError.innerHTML = `
+                        <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 20px;"></i>
+                        <h2>Error Loading Profile</h2>
+                        <p>There was an error loading your profile data.</p>
+                        <button class="btn btn-primary" onclick="window.location.reload()" style="margin-top: 20px;">
+                            <i class="fas fa-refresh"></i>
+                            Retry
+                        </button>
+                    `;
+          }
+        } else {
+          // User not authenticated
+          authLoading.style.display = "none";
+          authError.style.display = "block";
+          mainApp.classList.remove("show");
+        }
+      });
+
+      // Handle browser back/forward navigation
+      window.addEventListener("popstate", function (e) {
+        if (!currentUser) {
+          window.location.href = "/login-signup";
+        }
+      });
+
+      // Prevent form submission on Enter key in password fields (except submit buttons)
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" && e.target.type === "password") {
+          e.preventDefault();
+          const form = e.target.closest("form");
+          if (form) {
+            const submitButton = form.querySelector('button[type="submit"]');
+            if (submitButton) {
+              submitButton.click();
+            }
+          }
+        }
+      });
+
+      // Auto-save functionality (optional)
+      let autoSaveTimeout;
+      const profileInputs = ["profile-name-input"];
+
+      profileInputs.forEach((inputId) => {
+        document.getElementById(inputId).addEventListener("input", function () {
+          clearTimeout(autoSaveTimeout);
+          autoSaveTimeout = setTimeout(() => {
+            // Auto-save indication could be added here
+            console.log("Auto-save triggered");
+          }, 2000);
+        });
+      });
+    </script>
+  </body>
+</html>

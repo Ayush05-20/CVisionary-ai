@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upload Your CV - CVisionary</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../static/css/upload.css" />
+  </head>
+  <body>
+    <!-- Header (Integrated from howitworks.html logic) -->
+    <header class="header">
+      <nav class="nav">
+        <a href="/index" class="logo">
+          <div class="logo-icon">
+            <i class="fas fa-brain"></i>
+          </div>
+          CVisionary
+        </a>
+
+        <div class="nav-links">
+          <a href="/features">Features</a>
+          <a href="/howitworks">Workflow</a>
+          <a href="/pricing">Pricing</a>
+          <a href="/upload" class="active">Upload</a>
+          <a href="/about-us">About Us</a>
+        </div>
+
+        <!-- Authentication / User Menu (dynamic) -->
+        <div id="auth-section" class="auth-hidden">
+          <!-- Loading spinner, visible initially -->
+          <div id="auth-loading" class="auth-spinner-container">
+            <i class="fas fa-spinner fa-spin"></i>
+          </div>
+
+          <!-- Default (unauthenticated) buttons - Initially hidden -->
+          <div class="auth-buttons hidden" id="auth-buttons-group">
+            <button class="btn btn-outline" id="login-button">Log In</button>
+            <button class="btn btn-primary" id="get-started-button">
+              Get Started
+            </button>
+          </div>
+
+          <!-- User Menu (authenticated) - Initially hidden -->
+          <div class="user-menu hidden" id="user-menu-group">
+            <div class="user-info" id="user-profile-link">
+              <div class="user-avatar" id="header-avatar">
+                <i class="fas fa-user"></i>
+              </div>
+              <div>
+                <div style="font-weight: 600" id="header-name">Loading...</div>
+                <div
+                  style="font-size: 0.875rem; color: var(--gray-500)"
+                  id="header-email"
+                >
+                  Loading...
+                </div>
+              </div>
+            </div>
+            <button class="logout-btn" id="logout-btn">
+              <i class="fas fa-sign-out-alt"></i>
+              Logout
+            </button>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <section class="upload-section">
+      <div class="container">
+        <div class="upload-container">
+          <div class="upload-content">
+            <p class="page-subtitle">
+              <span><i class="fas fa-file-alt"></i></span> RESUME UPLOAD
+            </p>
+            <h1 class="page-title">Upload Your CV & Find Your Dream Job</h1>
+            <p class="page-description">
+              Our AI will analyze your resume, extract your skills and
+              experience, and match you with jobs that align with your career
+              goals. Get personalized job recommendations in minutes.
+            </p>
+
+            <div class="benefits-list">
+              <div class="benefit-item">
+                <div class="benefit-icon">
+                  <i class="fas fa-bolt"></i>
+                </div>
+                <div class="benefit-content">
+                  <h4>Instant Analysis</h4>
+                  <p>
+                    Our AI analyzes your resume in seconds, identifying key
+                    skills, experience, and qualifications.
+                  </p>
+                </div>
+              </div>
+
+              <div class="benefit-item">
+                <div class="benefit-icon">
+                  <i class="fas fa-bullseye"></i>
+                </div>
+                <div class="benefit-content">
+                  <h4>Perfect Job Matches</h4>
+                  <p>
+                    Get matched with jobs that align with your skills and career
+                    goals, with 93% matching accuracy.
+                  </p>
+                </div>
+              </div>
+
+              <div class="benefit-item">
+                <div class="benefit-icon">
+                  <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="benefit-content">
+                  <h4>Skills Gap Analysis</h4>
+                  <p>
+                    Identify skills you need to develop to qualify for your
+                    dream job and get personalized recommendations.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="upload-access-wrapper">
+            <!-- Login Prompt Overlay (initially hidden) -->
+            <div id="login-prompt-overlay" class="login-prompt-overlay hidden">
+              <div class="lock-icon">
+                <i class="fas fa-lock"></i>
+              </div>
+              <h3>Log In to Upload Your CV</h3>
+              <p>
+                Unlock personalized job matching and skill analysis by logging
+                into your CVisionary account.
+              </p>
+              <button class="btn btn-primary" id="overlay-login-button">
+                Log In
+              </button>
+            </div>
+
+            <!-- Upload Form Container (initially visible, but disabled if not logged in) -->
+            <div class="upload-form-container" id="upload-form-container">
+              <div class="upload-form-header">
+                <h3>Upload Your Resume</h3>
+                <p>Start your career journey with just one click</p>
+              </div>
+
+              <!-- IMPORTANT: Form action updated to /process-resume -->
+              <form class="upload-form" id="cv-upload-form" action="/process-resume" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                  <label>Upload CV/Resume</label>
+                  <div class="file-upload">
+                    <div class="file-upload-wrapper" id="file-upload-area">
+                      <div class="file-upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                      </div>
+                      <div class="file-upload-text">
+                        <h4>Drag & Drop your file here</h4>
+                        <p>or click to browse from your computer</p>
+                        <span class="file-types"
+                          >Supported formats: PDF, DOCX, DOC, RTF (Max
+                          5MB)</span
+                        >
+                      </div>
+                      <input
+                        type="file"
+                        id="cv-file"
+                        name="cv-file" 
+                    </div>
+                    <div class="cv-preview hidden" id="cv-preview"> <!-- Added hidden initially -->
+                      <div class="cv-preview-left">
+                        <div class="cv-preview-icon">
+                          <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="cv-preview-info">
+                          <h4 id="file-name">filename.pdf</h4>
+                          <p id="file-size">0 KB</p>
+                        </div>
+                      </div>
+                      <div class="cv-preview-remove" id="remove-file">
+                        <i class="fas fa-times"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-footer">
+                  <button
+                    type="submit"
+                    class="btn btn-primary"
+                    id="upload-submit-button"
+                  >
+                    Upload & Find Matches
+                  </button>
+                </div>
+
+                <p class="privacy-notice">
+                  By uploading your resume, you agree to our
+                  <a href="#">Terms of Service</a> and
+                  <a href="#">Privacy Policy</a>
+                </p>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div class="footer-logo">
+              <div class="footer-logo-icon">
+                <i class="fas fa-brain"></i>
+              </div>
+              CVisionary
+            </div>
+            <p class="footer-description">
+              Using artificial intelligence to revolutionize how talent and
+              opportunities connect, making recruitment smarter, faster, and
+              more effective.
+            </p>
+            <div class="social-icons">
+              <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+              <a href="#" class="social-icon"
+                ><i class="fab fa-linkedin-in"></i
+              ></a>
+              <a href="#" class="social-icon"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a href="#" class="social-icon"
+                ><i class="fab fa-instagram"></i
+              ></a>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="footer-heading">Product</h3>
+            <div class="footer-links">
+              <a href="#">Features</a>
+              <a href="#">Pricing</a>
+              <a href="#">Case Studies</a>
+              <a href="#">Reviews</a>
+              <a href="#">Updates</a>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="footer-heading">Company</h3>
+            <div class="footer-links">
+              <a href="#">About Us</a>
+              <a href="#">Careers</a>
+              <a href="#">Blog</a>
+              <a href="#">Press</a>
+              <a href="#">Contact</a>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="footer-heading">Resources</h3>
+            <div class="footer-links">
+              <a href="#">Support</a>
+              <a href="#">Documentation</a>
+              <a href="#">API</a>
+              <a href="#">Community</a>
+              <a href="#">Partners</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>© 2025 CVisionary AI. All rights reserved.</p>
+          <div class="footer-bottom-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Cookie Policy</a>
+            <a href="#">Sitemap</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Firebase and Authentication Scripts (Copied and modified from howitworks.html for consistency) -->
+    <script type="module">
+      // Import Firebase modules
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+      import {
+        getAuth,
+        onAuthStateChanged,
+        signOut,
+      } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+      import {
+        getFirestore,
+        doc,
+        getDoc,
+        setDoc, // Import setDoc for creating initial user doc
+        updateDoc, // Import updateDoc for updating user data
+      } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+      // Firebase configuration (using the one from activity2.html)
+      const firebaseConfig = {
+        apiKey: "AIzaSyCyw-l5jQMZS77ZUcgLEY3GnbJmZyFZ_mY",
+        authDomain: "authenticate1-ec031.firebaseapp.com",
+        projectId: "authenticate1-ec031",
+        storageBucket: "authenticate1-ec031.firebasestorage.app",
+        messagingSenderId: "259315058735",
+        appId: "1:259315058735:web:cc77ae09101c38f26e1eda",
+        measurementId: "G-2GVD4YQWEP",
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth();
+      const db = getFirestore();
+
+      // Global variable to store user data
+      let currentUserData = null;
+
+      // Utility Functions
+      function getInitials(name) {
+        if (!name) return "U";
+        return name
+          .split(" ")
+          .map((word) => word.charAt(0))
+          .join("")
+          .toUpperCase()
+          .slice(0, 2);
+      }
+
+      // Function to load user profile from Firestore
+      async function loadUserProfile(user) {
+        console.log("loadUserProfile: User object received:", user);
+        try {
+          const userDocRef = doc(db, "users", user.uid);
+          const userDocSnap = await getDoc(userDocRef);
+          if (userDocSnap.exists()) {
+            currentUserData = userDocSnap.data();
+            console.log(
+              "loadUserProfile: User data from Firestore:",
+              currentUserData
+            );
+          } else {
+            // If user document doesn't exist, create a basic one
+            currentUserData = {
+              name: user.displayName || "User",
+              email: user.email,
+              role: "user",
+              createdAt: new Date(),
+              lastLogin: new Date(),
+              loginCount: 1,
+            };
+            await setDoc(userDocRef, currentUserData); // Use setDoc for initial creation
+            console.log(
+              "loadUserProfile: Created new user document:",
+              currentUserData
+            );
+          }
+          // Update last login (can also increment login count here if desired)
+          await updateDoc(userDocRef, {
+            lastLogin: new Date(),
+            loginCount: (currentUserData.loginCount || 0) + 1,
+          });
+          console.log(
+            "loadUserProfile: User data updated with lastLogin/loginCount."
+          );
+          updateHeaderUI(); // Update the header after fetching/updating data
+        } catch (error) {
+          console.error("Error loading user profile:", error);
+          // Handle error, maybe show a generic "User" name
+          document.getElementById("header-name").textContent = "User";
+          document.getElementById("header-email").textContent = "Error";
+          document.getElementById("header-avatar").textContent = "U";
+        }
+      }
+
+      // Function to update the header UI based on user data
+      function updateHeaderUI() {
+        console.log("updateHeaderUI: Current User Data:", currentUserData);
+        const authSection = document.getElementById("auth-section");
+        const authLoading = document.getElementById("auth-loading"); // Get the loading spinner
+        const userMenu = document.getElementById("user-menu-group");
+        const authButtons = document.getElementById("auth-buttons-group");
+
+        // Hide the loading spinner first
+        authLoading.classList.add("hidden");
+
+        if (currentUserData) {
+          const initials = getInitials(
+            currentUserData.name || currentUserData.email
+          );
+          document.getElementById("header-avatar").textContent = initials;
+          document.getElementById("header-name").textContent =
+            currentUserData.name || "User";
+          document.getElementById("header-email").textContent =
+            currentUserData.email;
+
+          // Show user menu, hide auth buttons
+          userMenu.classList.remove("hidden");
+          authButtons.classList.add("hidden");
+          console.log("updateHeaderUI: User is logged in. UI updated.");
+        } else {
+          // User is logged out
+          userMenu.classList.add("hidden");
+          authButtons.classList.remove("hidden");
+          console.log("updateHeaderUI: User is logged out. UI updated.");
+        }
+        // Make the auth section visible after determining state
+        authSection.classList.remove("auth-hidden");
+      }
+
+      // Function to enable/disable upload functionality based on login status
+      function updateUploadUI(isLoggedIn) {
+        const loginPromptOverlay = document.getElementById(
+          "login-prompt-overlay"
+        );
+        const uploadFormContainer = document.getElementById(
+          "upload-form-container"
+        );
+        const uploadSubmitButton = document.getElementById(
+          "upload-submit-button"
+        );
+        const cvFile = document.getElementById("cv-file");
+
+        if (isLoggedIn) {
+          loginPromptOverlay.classList.add("hidden");
+          // Remove a 'disabled' class if you have one controlling opacity/pointer-events
+          uploadFormContainer.classList.remove("disabled");
+          uploadSubmitButton.disabled = false;
+          cvFile.disabled = false;
+          console.log("Upload UI enabled.");
+        } else {
+          loginPromptOverlay.classList.remove("hidden");
+          // Add a 'disabled' class if you have one controlling opacity/pointer-events
+          uploadFormContainer.classList.add("disabled");
+          uploadSubmitButton.disabled = true;
+          cvFile.disabled = true;
+          console.log("Upload UI disabled. Login prompt shown.");
+        }
+      }
+
+      // Authentication State Observer
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          // User is signed in
+          console.log("onAuthStateChanged: User logged in:", user.uid);
+          loadUserProfile(user); // Load user data from Firestore
+          updateUploadUI(true); // Enable upload UI
+        } else {
+          // User is signed out
+          console.log("onAuthStateChanged: User logged out.");
+          currentUserData = null; // Clear user data
+          updateHeaderUI(); // Update header to show login/signup buttons
+          updateUploadUI(false); // Disable upload UI
+        }
+      });
+
+      // Event listener for Logout button
+      document.getElementById("logout-btn").addEventListener("click", () => {
+        signOut(auth)
+          .then(() => {
+            console.log("User signed out successfully.");
+            // onAuthStateChanged will handle UI updates
+          })
+          .catch((error) => {
+            console.error("Error signing out:", error);
+          });
+      });
+
+      // Event listener for Login button in header
+      document.getElementById("login-button").addEventListener("click", () => {
+        window.location.href = "/login-signup";
+      });
+
+      // Event listener for Get Started button in header
+      document
+        .getElementById("get-started-button")
+        .addEventListener("click", () => {
+          window.location.href = "/login-signup?tab=signup";
+        });
+
+      // --- File Upload Logic ---
+      document.addEventListener("DOMContentLoaded", function () {
+        const fileUploadArea = document.getElementById("file-upload-area");
+        const cvFile = document.getElementById("cv-file");
+        const cvPreview = document.getElementById("cv-preview");
+        const fileNameDisplay = document.getElementById("file-name");
+        const fileSizeDisplay = document.getElementById("file-size");
+        const removeFileButton = document.getElementById("remove-file");
+        const uploadSubmitButton = document.getElementById(
+          "upload-submit-button"
+        );
+        const cvUploadForm = document.getElementById("cv-upload-form"); // Get the form element
+        const overlayLoginButton = document.getElementById(
+          "overlay-login-button"
+        );
+
+        let uploadedFile = null;
+
+        // Function to format file size
+        function formatFileSize(bytes) {
+            if (bytes === 0) return "0 Bytes";
+            const k = 1024;
+            const sizes = ["Bytes", "KB", "MB", "GB"];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+        }
+
+        // Function to update file preview
+        function updateFilePreview(file) {
+          uploadedFile = file;
+          fileNameDisplay.textContent = file.name;
+          fileSizeDisplay.textContent = formatFileSize(file.size);
+          fileUploadArea.classList.add("hidden");
+          cvPreview.classList.remove("hidden");
+        }
+
+        // Function to reset file input and preview
+        function resetFileInput() {
+          uploadedFile = null;
+          cvFile.value = ""; // Clear the input
+          fileUploadArea.classList.remove("hidden"); // Ensure it's not hidden
+          fileUploadArea.style.display = "flex"; // Make sure it's visible if it was hidden by JS
+          cvPreview.classList.add("hidden");
+        }
+
+        // Event listener for file input change
+        cvFile.addEventListener("change", function () {
+          if (this.files.length > 0) {
+            const file = this.files[0];
+            if (file.size > 5 * 1024 * 1024) { // Check size against 5MB limit
+                alert("File size exceeds 5MB limit. Please upload a smaller file.");
+                resetFileInput(); // Clear the selection
+                return;
+            }
+            updateFilePreview(file);
+          }
+        });
+
+        // Event listeners for drag and drop
+        fileUploadArea.addEventListener("dragover", function (e) {
+          e.preventDefault();
+          if (!uploadSubmitButton.disabled) { // Only highlight if not disabled
+            this.classList.add("drag-over");
+            this.style.backgroundColor = "rgba(79, 70, 229, 0.1)"; // Add visual cue
+          }
+        });
+
+        fileUploadArea.addEventListener("dragleave", function (e) {
+          e.preventDefault();
+          this.classList.remove("drag-over");
+          this.style.backgroundColor = ""; // Reset background
+        });
+
+        fileUploadArea.addEventListener("drop", function (e) {
+          e.preventDefault();
+          this.classList.remove("drag-over");
+          this.style.backgroundColor = ""; // Reset background
+
+          if (!uploadSubmitButton.disabled && e.dataTransfer.files.length > 0) {
+            const file = e.dataTransfer.files[0];
+            if (file.size > 5 * 1024 * 1024) {
+                alert("File size exceeds 5MB limit. Please upload a smaller file.");
+                return;
+            }
+            cvFile.files = e.dataTransfer.files; // Assign dropped files to input
+            updateFilePreview(file);
+          }
+        });
+
+        // Event listener for remove file button
+        removeFileButton.addEventListener("click", resetFileInput);
+
+        // --- IMPORTANT: Modified form submission logic to use Fetch API ---
+        cvUploadForm.addEventListener("submit", async function (e) {
+          e.preventDefault(); // Prevent default form submission
+
+          if (uploadSubmitButton.disabled) return; // Prevent submission if disabled
+
+          if (uploadedFile) {
+            const originalText = uploadSubmitButton.textContent;
+            uploadSubmitButton.disabled = true;
+            uploadSubmitButton.innerHTML =
+              '<i class="fas fa-spinner fa-spin"></i> Processing...';
+
+            const formData = new FormData();
+            formData.append("cv-file", uploadedFile); // 'cv-file' must match the name in app.py
+
+            try {
+                const response = await fetch("/process-resume", { // IMPORTANT: New endpoint
+                    method: "POST",
+                    body: formData,
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log("Upload successful:", result);
+                    // Assuming Flask sends a redirect URL in the JSON response
+                    if (result.redirect) {
+                        window.location.href = result.redirect; // Redirect to /results page
+                    } else {
+                        alert("Resume processed, but no redirect URL provided. Check console.");
+                    }
+                } else {
+                    const errorData = await response.json();
+                    console.error("Upload failed:", errorData.error);
+                    alert("Upload failed: " + (errorData.error || "Unknown error"));
+                }
+            } catch (error) {
+                console.error("Network or unexpected error:", error);
+                alert("An error occurred during upload. Please try again.");
+            } finally {
+                uploadSubmitButton.disabled = false;
+                uploadSubmitButton.textContent = originalText;
+                resetFileInput(); // Clear the file selection after processing attempt
+            }
+          } else {
+            alert("Please upload your resume before submitting.");
+          }
+        });
+
+        // Event listener for the overlay login button
+        if (overlayLoginButton) {
+          overlayLoginButton.addEventListener("click", function () {
+            window.location.href = "/login-signup";
+          });
+        }
+
+        // Set active navigation link for 'Upload' page
+        const currentPath = window.location.pathname.split("/").pop();
+        const navLinks = document.querySelectorAll(".nav-links a");
+        navLinks.forEach((link) => {
+          if (
+            link.getAttribute("href") &&
+            link.getAttribute("href").endsWith(currentPath)
+          ) {
+            link.classList.add("active");
+          } else {
+            link.classList.remove("active");
+          }
+        });
+
+        // Initial UI state check on load
+        updateUploadUI(auth.currentUser); // Check auth state on DOMContentLoaded
+      });
+    </script>
+  </body>
+</html>
