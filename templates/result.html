@@ -1531,16 +1531,6 @@
                 <strong>Missing Skills:</strong> {{
                 job.match_details.missing_skills | join(', ') or 'None' }}
               </p>
-              {% if job.url %}
-              <p>
-                <a
-                  href="{{ job.url }}"
-                  target="_blank"
-                  class="btn btn-outline btn-sm"
-                  >View Job</a
-                >
-              </p>
-              {% endif %}
             </li>
             {% endfor %}
           </ul>
