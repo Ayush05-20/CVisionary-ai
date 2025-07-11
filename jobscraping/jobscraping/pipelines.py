@@ -4,7 +4,8 @@
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 
 import os
-import mysql.connector
+import psycopg2
+import psycopg2.extras
 import json
 from itemadapter import ItemAdapter
 from jobscraping.items import JobItem  # Ensure this import path is correct
@@ -15,17 +16,19 @@ class JobscrapingPipeline:
         return item
 
 
-class SaveToMYSqlPipeLine:
+class SaveToPostgreSQLPipeLine:
     def __init__(self):
         # Use environment variables for database configuration
         self.db_config = {
             'host': os.getenv('DB_HOST', 'localhost'),
-            'user': os.getenv('DB_USER', 'root'),
-            'password': os.getenv('DB_PASSWORD', 'my$qlayush1'),
+            'user': os.getenv('DB_USER', 'postgres'),
+            'password': os.getenv('DB_PASSWORD', ''),
             'database': os.getenv('DB_NAME', 'jobs'),
-            'port': int(os.getenv('DB_PORT', '3306')),
-            'autocommit': False
+            'port': int(os.getenv('DB_PORT', '5432'))
         }
+        
+        # Alternative: Use DATABASE_URL (Render provides this)
+        self.database_url = os.getenv('DATABASE_URL')
         
         self.conn = None
         self.cur = None
@@ -34,14 +37,18 @@ class SaveToMYSqlPipeLine:
     def setup_database(self):
         """Setup database connection with error handling"""
         try:
-            # Establish database connection
-            self.conn = mysql.connector.connect(**self.db_config)
-            self.cur = self.conn.cursor()
+            # Try DATABASE_URL first (Render's format), then individual config
+            if self.database_url:
+                self.conn = psycopg2.connect(self.database_url)
+            else:
+                self.conn = psycopg2.connect(**self.db_config)
+            
+            self.cur = self.conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
-            # Create table if it doesn't exist
+            # Create table if it doesn't exist (PostgreSQL syntax)
             self.cur.execute('''
             CREATE TABLE IF NOT EXISTS jobs(
-                id INT AUTO_INCREMENT PRIMARY KEY,
+                id SERIAL PRIMARY KEY,
                 url VARCHAR(255) UNIQUE,
                 title VARCHAR(255),
                 job_cat VARCHAR(255),
@@ -55,14 +62,33 @@ class SaveToMYSqlPipeLine:
                 dis TEXT,
                 responsibilities TEXT,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );''')
             
-            self.conn.commit()
-            print("Database connection established successfully")
+            # Create trigger for updated_at (PostgreSQL doesn't have ON UPDATE like MySQL)
+            self.cur.execute('''
+            CREATE OR REPLACE FUNCTION update_updated_at_column()
+            RETURNS TRIGGER AS $$
+            BEGIN
+                NEW.updated_at = CURRENT_TIMESTAMP;
+                RETURN NEW;
+            END;
+            $$ language 'plpgsql';
+            ''')
             
-        except mysql.connector.Error as e:
-            print(f"Error connecting to MySQL database: {e}")
+            self.cur.execute('''
+            DROP TRIGGER IF EXISTS update_jobs_updated_at ON jobs;
+            CREATE TRIGGER update_jobs_updated_at
+                BEFORE UPDATE ON jobs
+                FOR EACH ROW
+                EXECUTE FUNCTION update_updated_at_column();
+            ''')
+            
+            self.conn.commit()
+            print("PostgreSQL database connection established successfully")
+            
+        except psycopg2.Error as e:
+            print(f"Error connecting to PostgreSQL database: {e}")
             print("Pipeline will continue without database storage")
             self.conn = None
             self.cur = None
@@ -83,16 +109,16 @@ class SaveToMYSqlPipeLine:
 
             # Check if job already exists based on URL to prevent duplicates
             self.cur.execute("SELECT id FROM jobs WHERE url = %s", (str(item.get('url', '')),))
-            existing_job_id = self.cur.fetchone()
+            existing_job = self.cur.fetchone()
 
-            if existing_job_id:
+            if existing_job:
                 # If job exists, update its details
                 self.cur.execute("""
                     UPDATE jobs SET
                         title = %s, job_cat = %s, location = %s, company = %s,
                         education = %s, experience = %s, skills = %s, 
                         general_requirements = %s, specific_requirements = %s,
-                        dis = %s, responsibilities = %s
+                        dis = %s, responsibilities = %s, updated_at = CURRENT_TIMESTAMP
                     WHERE url = %s
                 """, (
                     str(item.get('title', '')),
@@ -138,7 +164,7 @@ class SaveToMYSqlPipeLine:
             self.conn.commit()
             return item
 
-        except mysql.connector.Error as e:
+        except psycopg2.Error as e:
             if self.conn:
                 self.conn.rollback()
             spider.logger.error(f"Database error while saving item: {e}")
@@ -160,4 +186,4 @@ class SaveToMYSqlPipeLine:
             self.cur.close()
         if self.conn:
             self.conn.close()
-        spider.logger.info("MySQL connection closed by SaveToMYSqlPipeLine.")
+        spider.logger.info("PostgreSQL connection closed by SaveToPostgreSQLPipeLine.")

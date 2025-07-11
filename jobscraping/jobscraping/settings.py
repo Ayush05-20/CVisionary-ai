@@ -64,7 +64,7 @@ ROBOTSTXT_OBEY = True
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    "jobscraping.pipelines.JobscrapingPipeline": 300,
-   "jobscraping.pipelines.SaveToMYSqlPipeLine": 400,
+   "jobscraping.pipelines.SaveToPostgreSQLPipeLine": 400,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
