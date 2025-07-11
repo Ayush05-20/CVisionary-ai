@@ -26,7 +26,7 @@ firebase-admin==6.9.0
 Flask==3.1.1
 Flask-Session==0.8.0
 fonttools==4.58.2
-google-ai-generativelanguage==0.6.18
+google-ai-generativelanguage==0.6.15
 google-api-core==2.25.1rc0
 google-api-python-client==2.172.0
 google-auth==2.40.3
@@ -64,7 +64,7 @@ jsonpatch==1.33
 jsonpointer==3.0.0
 langchain==0.3.26
 langchain-core==0.3.68
-langchain-google-genai==2.1.7
+langchain-google-genai==2.0.10
 langchain-ollama==0.3.3
 langchain-text-splitters==0.3.8
 langsmith==0.3.45
