@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 
 ALLOWED_EXTENSIONS = {'pdf', 'docx', 'doc', 'rtf'}
-TOP_N_FOR_LLM = 10
+TOP_N_FOR_LLM = 5
 class ResumeJobMatcher:
     def __init__(self, model_name="llama3.2"):
         try:

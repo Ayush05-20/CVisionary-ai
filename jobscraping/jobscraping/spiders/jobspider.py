@@ -4,7 +4,9 @@ from jobscraping.items import JobItem
 class JobspiderSpider(scrapy.Spider):
     name = "jobspider"
     allowed_domains = ["merojob.com"]
-    start_urls = ["https://merojob.com/search/?q=&industry=12&industry=26&industry=40&industry=41&industry=42&industry=91&"]
+    start_urls = ["https://merojob.com/search/?"]
+    max_pages = 10  # limit to 10 pages
+    current_page = 1
     
     custom_settings = {
         'FEEDS' :
@@ -23,9 +25,12 @@ class JobspiderSpider(scrapy.Spider):
             yield response.follow(job_url, callback=self.parse_job_details)
             
         next_page = response.css('a.pagination-next.page-link::attr(href)').get()
-        if next_page is not None:
-            next_page_url = 'https://merojob.com/search/?q=&industry=12&industry=26&industry=40&industry=41&industry=42&industry=91&' + next_page
-            yield response.follow(next_page_url, callback=self.parse)
+        
+        if self.current_page < self.max_pages:
+            next_page = response.css('a.pagination-next.page-link::attr(href)').get()
+            if next_page:
+                self.current_page += 1
+                yield response.follow(next_page, callback=self.parse)
             
     def parse_job_details(self, response):
         job_item = JobItem()
