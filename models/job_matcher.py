@@ -7,7 +7,7 @@ from typing import Dict, List, Optional
 from langchain_core.prompts import PromptTemplate
 from langchain_google_genai import GoogleGenerativeAI
 from resume_scraper.resume_parser import parse_resume_from_file, generate_resume_summary # Assuming this is in your project path
-from utils.helpers import fetch_jobs_from_db # Import the helper function
+from utils.helpers import get_jobs_from_db# Import the helper function
 from config import Config
 
 import re
@@ -74,7 +74,7 @@ class ResumeJobMatcher:
     def _fetch_jobs_from_db(self) -> List[Dict]:
         """Fetch jobs from database using the helper function"""
         try:
-            return fetch_jobs_from_db()
+            return get_jobs_from_db()
         except Exception as e:
             logger.error(f"Error fetching jobs from database: {e}")
             return []
