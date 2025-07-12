@@ -1,7 +1,14 @@
 import os
+import logging
 import psycopg2
 import psycopg2.extras
 import logging
+logger = logging.getLogger(__name__)
+def allowed_file(filename):
+    """Check if the uploaded file has an allowed extension."""
+    ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'doc', 'docx', 'csv', 'xlsx'}
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def get_db_connection():
     """Get PostgreSQL database connection with error handling"""
@@ -54,6 +61,10 @@ def get_jobs_from_db(limit=None):
         if conn:
             conn.close()
         return []
+
+def fetch_jobs_from_db(limit=None):
+    """Alias for get_jobs_from_db for backwards compatibility"""
+    return get_jobs_from_db(limit)
 
 def search_jobs_in_db(keywords, limit=10):
     """Search for jobs in PostgreSQL database based on keywords"""
