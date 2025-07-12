@@ -15,10 +15,10 @@ class SaveToPostgreSQLPipeLine:
     def __init__(self):
         # Use environment variables for database configuration
         self.db_config = {
-            'host': os.getenv('DB_HOST', 'localhost'),
-            'user': os.getenv('DB_USER', 'postgres'),
-            'password': os.getenv('DB_PASSWORD', ''),
-            'database': os.getenv('DB_NAME', 'jobs'),
+            'host': os.getenv('DB_HOST', 'dpg-d1opqomr433s73cldhqg-a'),
+            'user': os.getenv('DB_USER', 'jobs_wd0e_user'),
+            'password': os.getenv('DB_PASSWORD', 'QNkzuTTqMGUUxTuwicp4JRwKYXJq8tug'),
+            'database': os.getenv('DB_NAME', 'jobs_wd0e'),
             'port': int(os.getenv('DB_PORT', '5432'))
         }
         
